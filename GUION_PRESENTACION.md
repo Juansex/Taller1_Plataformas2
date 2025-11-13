@@ -316,32 +316,31 @@ curl -X DELETE http://localhost:8080/api/tasks/{ID}
 
 ---
 
-## Parte 8: Relación con el Repo Original (2 minutos)
+## Parte 8: Escalabilidad y Extensiones Futuras (2 minutos)
 
-### Cómo aplicar Clean Architecture al repo microservice-app-example
+### Posibles Mejoras al Proyecto
 
-**TODOs API (Node.js)** podría refactorizarse:
-
-```
-todos-api/
-├── domain/
-│   ├── todo.js          # Entidad
-│   └── todoRepository.js # Interface
-├── usecase/
-│   └── todoService.js   # Lógica de negocio
-├── adapters/
-│   ├── inbound/
-│   │   └── todoController.js  # Express routes
-│   └── outbound/
-│       ├── mongoTodoRepository.js
-│       └── redisPublisher.js
-└── app.js  # Configuración
+**Persistencia Real:**
+```java
+// PostgreSQLTaskRepository.java
+@Repository
+public class PostgreSQLTaskRepository implements TaskRepository {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    // Implementación con base de datos real
+}
 ```
 
-**Beneficios:**
-- Tests más fáciles (mockear Redis y MongoDB)
-- Cambiar de Express a Fastify sin tocar lógica
-- Reutilizar lógica en CLI o workers
+**Nuevos Adaptadores:**
+- REST API → GraphQL
+- In-Memory → PostgreSQL/MongoDB
+- Agregar caché con Redis
+- Event publishing para arquitectura de eventos
+
+**Beneficios de la arquitectura:**
+- Cambiar persistencia sin tocar lógica de negocio
+- Agregar nuevos canales de entrada (CLI, gRPC)
+- Reutilizar casos de uso en diferentes contextos
 
 ---
 
@@ -358,9 +357,9 @@ todos-api/
 ### Recursos
 
 - Código completo: `/workspaces/Taller1_Plataformas2/clean-service`
-- Repo original: https://github.com/Barcino44/microservice-app-example
-- Tests: `./mvnw test`
-- Docker: `docker compose up`
+- Documentación: README.md con 13 pasos detallados
+- Tests: `./mvnw test` (8 tests automatizados)
+- Docker: `docker compose up` (despliegue en contenedor)
 
 ---
 
