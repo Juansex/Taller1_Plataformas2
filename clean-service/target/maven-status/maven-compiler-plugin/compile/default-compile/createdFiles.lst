@@ -1,0 +1,7 @@
+com/example/clean/CleanServiceApplication.class
+com/example/clean/domain/TaskRepository.class
+com/example/clean/domain/Task.class
+com/example/clean/adapter/outbound/InMemoryTaskRepository.class
+com/example/clean/usecase/TaskService.class
+com/example/clean/adapter/inbound/TaskController.class
+com/example/clean/adapter/inbound/TaskController$CreateTaskRequest.class

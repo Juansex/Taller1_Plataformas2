@@ -1,0 +1,16 @@
+# Ignorar archivos de Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Ignorar archivos de IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.DS_Store
+
+# Ignorar logs
+*.log
