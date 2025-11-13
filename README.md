@@ -8,6 +8,16 @@ El desarrollo se centra en aplicar correctamente los conceptos fundamentales de 
 
 ---
 
+## Evidencias de Implementación
+
+### Estructura del Proyecto
+
+![Estructura del Proyecto](docs/images/01-estructura-proyecto.png)
+
+La arquitectura del proyecto sigue una organización en capas claramente definidas:
+
+---
+
 ## Paso 1: Análisis de la Estructura del Proyecto
 
 El proyecto `clean-service` ha sido desarrollado siguiendo estrictamente los principios de Clean Architecture, organizando el código en una estructura jerárquica que respeta las dependencias unidireccionales.
@@ -24,6 +34,28 @@ La estructura resultante organiza el código en tres capas principales:
 - **adapter/**: Proporciona las implementaciones concretas tanto para la entrada (inbound) como para la salida (outbound) de datos.
 
 Esta separación garantiza que el dominio permanezca independiente de frameworks y tecnologías específicas, permitiendo que la lógica de negocio sea reutilizable y fácilmente testeable.
+
+### Capa de Dominio
+
+![Entidad Task](docs/images/02-domain-task.png)
+
+![Interfaz TaskRepository](docs/images/03-domain-repository.png)
+
+La capa de dominio implementa entidades de negocio puras sin dependencias de frameworks.
+
+### Capa de Casos de Uso
+
+![TaskService](docs/images/04-usecase-service.png)
+
+El servicio contiene la lógica de aplicación y las reglas de negocio.
+
+### Capa de Adaptadores
+
+![TaskController](docs/images/05-adapter-controller.png)
+
+![InMemoryTaskRepository](docs/images/06-adapter-repository.png)
+
+Los adaptadores conectan el núcleo de la aplicación con el mundo exterior.
 
 ---
 
@@ -85,6 +117,18 @@ Este controlador expone los endpoints HTTP que permiten interactuar con el micro
 
 ## Paso 5: Ejecución de las Pruebas
 
+### Código de Tests
+
+![Test Unitario](docs/images/07-test-unitario.png)
+
+![Test de Integración](docs/images/08-test-integracion.png)
+
+### Ejecución de Tests
+
+![Ejecución de Tests](docs/images/09-tests-ejecutando.png)
+
+![Resultados de Tests](docs/images/10-tests-resultados.png)
+
 Las pruebas son un componente fundamental para garantizar la calidad y el correcto funcionamiento del sistema. El proyecto incluye tanto pruebas unitarias como pruebas de integración.
 
 ```bash
@@ -111,6 +155,18 @@ Las pruebas unitarias utilizan Mockito para simular el comportamiento del reposi
 
 ## Paso 6: Construcción de la Imagen Docker
 
+### Archivos de Docker
+
+![Dockerfile](docs/images/11-dockerfile.png)
+
+![Docker Compose](docs/images/12-docker-compose.png)
+
+### Proceso de Build
+
+![Docker Build](docs/images/13-docker-build.png)
+
+![Imagen Creada](docs/images/14-docker-image.png)
+
 La contenedorización del microservicio mediante Docker permite garantizar que la aplicación se ejecute de manera consistente en cualquier entorno.
 
 ```bash
@@ -134,6 +190,14 @@ Este comando debe mostrar la imagen creada con el nombre `taller1_plataformas2-c
 ---
 
 ## Paso 7: Despliegue del Microservicio
+
+### Servicio en Ejecución
+
+![Docker Compose Up](docs/images/15-docker-up.png)
+
+![Contenedor Activo](docs/images/16-container-running.png)
+
+![Logs del Servicio](docs/images/17-service-logs.png)
 
 Una vez construida la imagen, se procede a iniciar el contenedor que ejecutará el microservicio.
 
@@ -165,29 +229,33 @@ Esto confirma que Spring Boot ha inicializado correctamente y el servidor Tomcat
 
 ---
 
-## Paso 8: Verificación de Funcionalidad - Creación de Tareas
+## Paso 8: Verificación de Funcionalidad - Operaciones CRUD
 
-Con el servicio en ejecución, se pueden realizar operaciones sobre la API REST expuesta.
+### Crear Tareas (POST)
 
-```bash
-curl -X POST http://localhost:8080/api/tasks \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Estudiar Clean Architecture","description":"Repasar conceptos fundamentales para evaluación"}'
-```
+![Crear Tarea 1](docs/images/18-api-post-1.png)
 
-Esta petición POST crea una nueva tarea en el sistema. El servicio generará automáticamente un identificador único (UUID) para la tarea y la almacenará en el repositorio en memoria.
+![Crear Tarea 2](docs/images/19-api-post-2.png)
 
-**Respuesta esperada:**
-```json
-{
-  "id": "402dbc48-5169-436a-beda-f79bc08fb7cb",
-  "title": "Estudiar Clean Architecture",
-  "description": "Repasar conceptos fundamentales para evaluación",
-  "completed": false
-}
-```
+![Crear Tarea 3](docs/images/20-api-post-3.png)
 
-El identificador retornado debe ser guardado para utilizarlo en operaciones posteriores sobre esta tarea específica.
+### Listar Tareas (GET)
+
+![Listar Tareas](docs/images/21-api-get.png)
+
+### Completar Tarea (PUT)
+
+![Completar Tarea](docs/images/22-api-put.png)
+
+![Verificar Completada](docs/images/23-api-get-completed.png)
+
+### Eliminar Tarea (DELETE)
+
+![Eliminar Tarea](docs/images/24-api-delete.png)
+
+![Verificar Eliminación](docs/images/25-api-get-deleted.png)
+
+Con el servicio en ejecución, se demuestran todas las operaciones CRUD sobre la API REST expuesta.
 
 ---
 
@@ -278,6 +346,30 @@ docker compose down
 ```
 
 Este comando detiene y elimina los contenedores en ejecución. Las imágenes Docker permanecen almacenadas localmente para facilitar futuros despliegues sin necesidad de reconstruirlas.
+
+---
+
+## Evidencias Adicionales
+
+### Estadísticas del Proyecto
+
+![Estadísticas del Código](docs/images/26-estadisticas.png)
+
+![Historial de Commits](docs/images/27-git-log.png)
+
+### Documentación
+
+![README](docs/images/28-readme.png)
+
+![Guión de Presentación](docs/images/29-guion.png)
+
+### Monitoreo
+
+![Logs en Tiempo Real](docs/images/30-logs.png)
+
+### Detención del Servicio
+
+![Docker Compose Down](docs/images/31-docker-down.png)
 
 ---
 
