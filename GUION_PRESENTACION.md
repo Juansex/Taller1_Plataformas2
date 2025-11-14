@@ -32,7 +32,7 @@
 ### Estructura del Proyecto
 
 ```bash
-cd /workspaces/Taller1_Plataformas2/clean-service
+cd clean-service
 tree src/main/java/com/example/clean
 ```
 
@@ -193,7 +193,7 @@ public class CleanServiceApplication {
 **Archivo:** `src/test/java/com/example/clean/usecase/TaskServiceTest.java`
 
 ```bash
-cd /workspaces/Taller1_Plataformas2/clean-service
+cd clean-service
 ./mvnw test -Dtest=TaskServiceTest
 ```
 
@@ -251,7 +251,6 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 **Archivo:** `docker-compose.yml`
 
 ```bash
-cd /workspaces/Taller1_Plataformas2
 docker compose up --build
 ```
 
@@ -356,8 +355,8 @@ public class PostgreSQLTaskRepository implements TaskRepository {
 
 ### Recursos
 
-- Código completo: `/workspaces/Taller1_Plataformas2/clean-service`
-- Documentación: README.md con 13 pasos detallados
+- Código completo: https://github.com/Juansex/Taller1_Plataformas2
+- Documentación: README.md con 11 pasos detallados
 - Tests: `./mvnw test` (8 tests automatizados)
 - Docker: `docker compose up` (despliegue en contenedor)
 
@@ -383,11 +382,11 @@ R: Sí, el patrón es independiente del lenguaje y framework.
 
 ```bash
 # Ejecutar tests
-cd /workspaces/Taller1_Plataformas2/clean-service
+cd clean-service
 ./mvnw test
 
 # Levantar servicio
-cd /workspaces/Taller1_Plataformas2
+cd ..
 docker compose up --build -d
 
 # Ver logs

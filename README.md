@@ -15,7 +15,7 @@ El desarrollo se centra en aplicar correctamente los conceptos fundamentales de 
 El proyecto `clean-service` ha sido desarrollado siguiendo estrictamente los principios de Clean Architecture, organizando el código en una estructura jerárquica que respeta las dependencias unidireccionales.
 
 ```bash
-cd /workspaces/Taller1_Plataformas2/clean-service
+cd clean-service
 tree src/main/java -L 3
 ```
 
@@ -111,6 +111,7 @@ Las pruebas son un componente fundamental para garantizar la calidad y el correc
 ### Pruebas Unitarias - TaskServiceTest
 
 ```bash
+cd clean-service
 cat src/test/java/com/example/clean/usecase/TaskServiceTest.java
 ```
 
@@ -135,7 +136,7 @@ Las pruebas de integración utilizan `@SpringBootTest` y `MockMvc` para probar l
 ### Ejecución de Tests
 
 ```bash
-cd /workspaces/Taller1_Plataformas2/clean-service
+cd clean-service
 ./mvnw test
 ```
 
@@ -200,7 +201,6 @@ El archivo `docker-compose.yml` define el servicio `clean-service` con su config
 ### Construcción de la Imagen
 
 ```bash
-cd /workspaces/Taller1_Plataformas2
 docker compose build
 ```
 
