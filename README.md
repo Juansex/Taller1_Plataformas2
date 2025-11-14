@@ -1,10 +1,10 @@
-# Microservicio de Gestión de Tareas con Clean Architecture
+# Microservicio de Gestión de Tareas
 
 ## Introducción
 
-Este proyecto constituye una implementación original de un microservicio de gestión de tareas (TODO) utilizando los principios de **Clean Architecture**. El objetivo principal es demostrar cómo estructurar una aplicación empresarial siguiendo un diseño arquitectónico que separa las responsabilidades en capas bien definidas, facilitando el mantenimiento, las pruebas y la escalabilidad del sistema.
+Este proyecto constituye una implementación original de un microservicio de gestión de tareas (TODO). El objetivo principal es demostrar cómo estructurar una aplicación empresarial siguiendo un diseño arquitectónico que separa las responsabilidades en capas bien definidas, facilitando el mantenimiento, las pruebas y la escalabilidad del sistema.
 
-El desarrollo se centra en aplicar correctamente los conceptos fundamentales de Clean Architecture propuestos por Robert C. Martin, estableciendo una separación clara entre el dominio de negocio, los casos de uso y los adaptadores de infraestructura, logrando así un código desacoplado y altamente testeable.
+El desarrollo establece una separación clara entre el dominio de negocio, los casos de uso y los adaptadores de infraestructura, logrando así un código desacoplado y altamente testeable.
 
 ---
 
@@ -12,7 +12,7 @@ El desarrollo se centra en aplicar correctamente los conceptos fundamentales de 
 
 ## Paso 1: Análisis de la Estructura del Proyecto
 
-El proyecto `clean-service` ha sido desarrollado siguiendo estrictamente los principios de Clean Architecture, organizando el código en una estructura jerárquica que respeta las dependencias unidireccionales.
+El proyecto `clean-service` organiza el código en una estructura jerárquica por capas que respeta las dependencias unidireccionales.
 
 ```bash
 cd clean-service
@@ -243,7 +243,7 @@ curl -X POST http://localhost:8080/api/tasks \
 # Crear segunda tarea
 curl -X POST http://localhost:8080/api/tasks \
   -H "Content-Type: application/json" \
-  -d '{"title":"Disenar arquitectura del sistema","description":"Definir capas de dominio, casos de uso y adaptadores según Clean Architecture"}'
+  -d '{"title":"Disenar arquitectura del sistema","description":"Definir capas de dominio, casos de uso y adaptadores del sistema"}'
 
 # Listar todas las tareas
 curl http://localhost:8080/api/tasks
@@ -336,7 +336,7 @@ Este proyecto ha permitido demostrar los siguientes aspectos:
 - Cambiar de tecnología implica modificaciones extensas en múltiples capas
 - La estructura dificulta la comprensión de las reglas de negocio
 
-**Enfoque Clean Architecture:**
+**Enfoque con Arquitectura en Capas:**
 - El dominio permanece independiente de frameworks y tecnologías
 - Las pruebas son rápidas y focalizadas en la lógica de negocio
 - Los cambios tecnológicos se aíslan en los adaptadores
@@ -403,4 +403,4 @@ docker compose down
 
 ## Conclusiones
 
-Este proyecto constituye una implementación práctica de Clean Architecture aplicada a un microservicio de gestión de tareas. La arquitectura propuesta permite mantener el código organizado, testeable y preparado para evolucionar según los requisitos futuros, demostrando los beneficios de aplicar principios de diseño sólidos en el desarrollo de software empresarial.
+Este proyecto constituye una implementación práctica de un microservicio de gestión de tareas con arquitectura por capas. La arquitectura propuesta permite mantener el código organizado, testeable y preparado para evolucionar según los requisitos futuros, demostrando los beneficios de aplicar principios de diseño sólidos en el desarrollo de software empresarial.
