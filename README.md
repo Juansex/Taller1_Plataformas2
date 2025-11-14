@@ -10,14 +10,6 @@ El desarrollo se centra en aplicar correctamente los conceptos fundamentales de 
 
 ## Evidencias de Implementación
 
-### Estructura del Proyecto
-
-![Estructura del Proyecto](docs/images/01-estructura-proyecto.png)
-
-La arquitectura del proyecto sigue una organización en capas claramente definidas:
-
----
-
 ## Paso 1: Análisis de la Estructura del Proyecto
 
 El proyecto `clean-service` ha sido desarrollado siguiendo estrictamente los principios de Clean Architecture, organizando el código en una estructura jerárquica que respeta las dependencias unidireccionales.
@@ -35,43 +27,29 @@ La estructura resultante organiza el código en tres capas principales:
 
 Esta separación garantiza que el dominio permanezca independiente de frameworks y tecnologías específicas, permitiendo que la lógica de negocio sea reutilizable y fácilmente testeable.
 
-### Capa de Dominio
-
-![Entidad Task](docs/images/02-domain-task.png)
-
-![Interfaz TaskRepository](docs/images/03-domain-repository.png)
-
-La capa de dominio implementa entidades de negocio puras sin dependencias de frameworks.
-
-### Capa de Casos de Uso
-
-![TaskService](docs/images/04-usecase-service.png)
-
-El servicio contiene la lógica de aplicación y las reglas de negocio.
-
-### Capa de Adaptadores
-
-![TaskController](docs/images/05-adapter-controller.png)
-
-![InMemoryTaskRepository](docs/images/06-adapter-repository.png)
-
-Los adaptadores conectan el núcleo de la aplicación con el mundo exterior.
-
 ---
 
 ## Paso 2: Exploración de la Capa de Dominio
 
 La capa de dominio constituye el núcleo de la aplicación y define los conceptos fundamentales del negocio sin ninguna dependencia hacia infraestructura o frameworks externos.
 
+### Entidad Task
+
 ```bash
 cat src/main/java/com/example/clean/domain/Task.java
 ```
 
+![Código de Task.java](docs/images/01-domain-task.png)
+
 Esta clase representa la entidad `Task` con sus atributos esenciales (identificador, título, descripción y estado de completitud). Es importante notar que esta clase no contiene anotaciones de ningún framework (como `@Entity` de JPA o `@Service` de Spring), manteniéndose como un objeto Java puro (POJO).
+
+### Interfaz TaskRepository
 
 ```bash
 cat src/main/java/com/example/clean/domain/TaskRepository.java
 ```
+
+![Código de TaskRepository.java](docs/images/02-domain-repository.png)
 
 La interfaz `TaskRepository` define el contrato para las operaciones de persistencia sin especificar cómo se implementarán dichas operaciones. Este es un ejemplo clásico del patrón de inversión de dependencias: el dominio define qué necesita, pero no cómo se proporciona. La implementación concreta podría utilizar cualquier tecnología de persistencia (memoria, base de datos relacional, NoSQL, etc.) sin afectar al dominio.
 
@@ -84,6 +62,8 @@ La capa de casos de uso contiene la lógica de aplicación que coordina las oper
 ```bash
 cat src/main/java/com/example/clean/usecase/TaskService.java
 ```
+
+![Código de TaskService.java](docs/images/03-usecase-service.png)
 
 La clase `TaskService` implementa las operaciones principales del sistema:
 - **Creación de tareas**: Valida que el título no esté vacío antes de persistir la tarea.
@@ -99,80 +79,107 @@ Esta clase recibe el repositorio a través de su constructor (inyección de depe
 
 Los adaptadores son las implementaciones concretas que conectan el núcleo de la aplicación con el mundo exterior, ya sea para recibir peticiones o para persistir datos.
 
-**Adaptador de Salida (Persistencia):**
-```bash
-cat src/main/java/com/example/clean/adapter/outbound/InMemoryTaskRepository.java
-```
+### Adaptador de Entrada (Controlador REST)
 
-Esta clase implementa la interfaz `TaskRepository` utilizando un `ConcurrentHashMap` para almacenar las tareas en memoria. La anotación `@Repository` indica que es un componente de Spring, pero esta dependencia está contenida en la capa de adaptadores. Si en el futuro se requiere cambiar a una base de datos PostgreSQL o MongoDB, solo sería necesario crear un nuevo adaptador sin modificar el dominio ni los casos de uso.
-
-**Adaptador de Entrada (Controlador REST):**
 ```bash
 cat src/main/java/com/example/clean/adapter/inbound/TaskController.java
 ```
 
+![Código de TaskController.java](docs/images/04-adapter-controller.png)
+
 Este controlador expone los endpoints HTTP que permiten interactuar con el microservicio. Utiliza las anotaciones de Spring Web (`@RestController`, `@PostMapping`, etc.) para mapear las peticiones HTTP a los métodos correspondientes. El controlador transforma los datos de entrada (DTOs) y delega toda la lógica de negocio al `TaskService`, actuando únicamente como un adaptador entre el protocolo HTTP y la lógica de aplicación.
+
+### Adaptador de Salida (Persistencia) y Configuración
+
+```bash
+cat src/main/java/com/example/clean/adapter/outbound/InMemoryTaskRepository.java
+cat src/main/java/com/example/clean/CleanServiceApplication.java
+```
+
+![Código de InMemoryTaskRepository.java y CleanServiceApplication.java](docs/images/05-adapter-repository-app.png)
+
+La clase `InMemoryTaskRepository` implementa la interfaz `TaskRepository` utilizando un `ConcurrentHashMap` para almacenar las tareas en memoria. La anotación `@Repository` indica que es un componente de Spring, pero esta dependencia está contenida en la capa de adaptadores. Si en el futuro se requiere cambiar a una base de datos PostgreSQL o MongoDB, solo sería necesario crear un nuevo adaptador sin modificar el dominio ni los casos de uso.
+
+La clase `CleanServiceApplication` configura manualmente el `TaskService` como un `@Bean`, manteniendo la independencia del framework en la capa de casos de uso.
 
 ---
 
 ## Paso 5: Ejecución de las Pruebas
 
-### Código de Tests
+Las pruebas son un componente fundamental para garantizar la calidad y el correcto funcionamiento del sistema. El proyecto incluye tanto pruebas unitarias como pruebas de integración.
 
-![Test Unitario](docs/images/07-test-unitario.png)
+### Pruebas Unitarias - TaskServiceTest
 
-![Test de Integración](docs/images/08-test-integracion.png)
+```bash
+cat src/test/java/com/example/clean/usecase/TaskServiceTest.java
+```
+
+![Código de TaskServiceTest.java - Parte 1](docs/images/06-test-service-1.png)
+
+![Código de TaskServiceTest.java - Parte 2](docs/images/07-test-service-2.png)
+
+Las pruebas unitarias utilizan Mockito para simular el comportamiento del repositorio, permitiendo probar la lógica de negocio de forma aislada sin necesidad de levantar el contexto de Spring ni utilizar una base de datos real. Esto resulta en pruebas extremadamente rápidas y enfocadas exclusivamente en la lógica del caso de uso.
+
+### Pruebas de Integración - TaskControllerIntegrationTest
+
+```bash
+cat src/test/java/com/example/clean/adapter/inbound/TaskControllerIntegrationTest.java
+```
+
+![Código de TaskControllerIntegrationTest.java - Parte 1](docs/images/08-test-integration-1.png)
+
+![Código de TaskControllerIntegrationTest.java - Parte 2](docs/images/09-test-integration-2.png)
+
+Las pruebas de integración utilizan `@SpringBootTest` y `MockMvc` para probar los endpoints HTTP de manera completa, validando el flujo desde el controlador hasta el repositorio.
 
 ### Ejecución de Tests
-
-![Ejecución de Tests](docs/images/09-tests-ejecutando.png)
-
-![Resultados de Tests](docs/images/10-tests-resultados.png)
-
-Las pruebas son un componente fundamental para garantizar la calidad y el correcto funcionamiento del sistema. El proyecto incluye tanto pruebas unitarias como pruebas de integración.
 
 ```bash
 cd /workspaces/Taller1_Plataformas2/clean-service
 ./mvnw test
 ```
 
-Este comando ejecutará el ciclo completo de pruebas:
-1. Descarga de dependencias necesarias (en la primera ejecución)
-2. Compilación del código fuente
-3. Ejecución de todas las pruebas
-4. Generación de reportes de resultados
+![Resultados de la ejecución de tests](docs/images/10-test-results.png)
 
-**Verificación de resultados:**
+El resultado esperado muestra que se ejecutaron 8 pruebas en total: 5 pruebas unitarias en `TaskServiceTest` y 3 pruebas de integración en `TaskControllerIntegrationTest`, todas sin errores ni fallos.
+
+### Reportes de Pruebas
+
 ```bash
-cat target/surefire-reports/*.txt | grep "Tests run"
+cat target/surefire-reports/com.example.clean.usecase.TaskServiceTest.txt
+cat target/surefire-reports/com.example.clean.adapter.inbound.TaskControllerIntegrationTest.txt
 ```
 
-El resultado esperado debe mostrar que se ejecutaron 8 pruebas en total: 5 pruebas unitarias en `TaskServiceTest` y 3 pruebas de integración en `TaskControllerIntegrationTest`, todas sin errores ni fallos.
+![Reportes detallados de Surefire](docs/images/11-test-reports.png)
 
-Las pruebas unitarias utilizan Mockito para simular el comportamiento del repositorio, permitiendo probar la lógica de negocio de forma aislada sin necesidad de levantar el contexto de Spring ni utilizar una base de datos real. Esto resulta en pruebas extremadamente rápidas y enfocadas exclusivamente en la lógica del caso de uso.
+Los reportes de Surefire proporcionan información detallada sobre cada prueba ejecutada, incluyendo tiempos de ejecución y resultados individuales.
 
 ---
 
-## Paso 6: Construcción de la Imagen Docker
+## Paso 6: Configuración del Proyecto
 
-### Archivos de Docker
-
-![Dockerfile](docs/images/11-dockerfile.png)
-
-![Docker Compose](docs/images/12-docker-compose.png)
-
-### Proceso de Build
-
-![Docker Build](docs/images/13-docker-build.png)
-
-![Imagen Creada](docs/images/14-docker-image.png)
-
-La contenedorización del microservicio mediante Docker permite garantizar que la aplicación se ejecute de manera consistente en cualquier entorno.
+### Archivo de Configuración Maven y Propiedades
 
 ```bash
-cd /workspaces/Taller1_Plataformas2
-docker compose build
+cat pom.xml
+cat src/main/resources/application.properties
 ```
+
+![Configuración pom.xml y application.properties](docs/images/12-pom-properties.png)
+
+El archivo `pom.xml` define las dependencias del proyecto (Spring Boot, Spring Web, JUnit, Mockito) y la configuración de Maven. El archivo `application.properties` establece la configuración básica del servidor, como el puerto 8080.
+
+---
+
+## Paso 7: Construcción de la Imagen Docker
+
+### Dockerfile Multi-Stage
+
+```bash
+cat clean-service/Dockerfile
+```
+
+![Contenido del Dockerfile](docs/images/13-dockerfile.png)
 
 El proceso de construcción utiliza un Dockerfile multi-stage que optimiza el tamaño final de la imagen:
 
@@ -180,150 +187,103 @@ El proceso de construcción utiliza un Dockerfile multi-stage que optimiza el ta
 
 **Etapa 2 (Runtime):** Copia únicamente el JAR compilado a una imagen con JRE (Java Runtime Environment), eliminando todas las herramientas de desarrollo y código fuente. Esto reduce significativamente el tamaño de la imagen final y mejora la seguridad al minimizar la superficie de ataque.
 
-**Verificación:**
+### Docker Compose
+
 ```bash
-docker images | grep clean-service
+cat docker-compose.yml
 ```
 
-Este comando debe mostrar la imagen creada con el nombre `taller1_plataformas2-clean-service` y su tamaño correspondiente.
+![Configuración de Docker Compose](docs/images/14-docker-compose.png)
+
+El archivo `docker-compose.yml` define el servicio `clean-service` con su configuración de puertos, healthcheck y variables de entorno.
+
+### Construcción de la Imagen
+
+```bash
+cd /workspaces/Taller1_Plataformas2
+docker compose build
+```
+
+![Proceso de construcción con Docker](docs/images/15-docker-build.png)
+
+Este comando construye la imagen Docker siguiendo las instrucciones del Dockerfile. El proceso compila el código fuente, ejecuta Maven, y crea una imagen optimizada lista para producción.
 
 ---
 
-## Paso 7: Despliegue del Microservicio
-
-### Servicio en Ejecución
-
-![Docker Compose Up](docs/images/15-docker-up.png)
-
-![Contenedor Activo](docs/images/16-container-running.png)
-
-![Logs del Servicio](docs/images/17-service-logs.png)
+## Paso 8: Despliegue del Microservicio
 
 Una vez construida la imagen, se procede a iniciar el contenedor que ejecutará el microservicio.
 
 ```bash
 docker compose up -d
-```
-
-El flag `-d` (detached) indica que el contenedor debe ejecutarse en segundo plano, liberando la terminal para continuar con otras operaciones.
-
-**Verificación del estado:**
-```bash
 docker compose ps
+docker compose logs clean-service
 ```
 
-El servicio debe aparecer con estado `Up` y la indicación `(healthy)`, lo que significa que el healthcheck configurado en Docker Compose está funcionando correctamente y el servicio está respondiendo a las peticiones.
+![Despliegue y logs del servicio](docs/images/16-docker-up-logs.png)
 
-**Inspección de logs:**
-```bash
-docker compose logs clean-service | tail -20
-```
+El flag `-d` (detached) indica que el contenedor debe ejecutarse en segundo plano. Los comandos posteriores verifican el estado del contenedor y muestran los logs de inicio.
 
-Los logs deben mostrar información similar a:
-```
-Started CleanServiceApplication in 4.611 seconds
-Tomcat started on port(s): 8080 (http)
-```
-
-Esto confirma que Spring Boot ha inicializado correctamente y el servidor Tomcat está escuchando en el puerto 8080.
+El servicio debe aparecer con estado `Up` y la indicación `(healthy)`, lo que significa que el healthcheck configurado en Docker Compose está funcionando correctamente. Los logs muestran que Spring Boot ha inicializado correctamente y Tomcat está escuchando en el puerto 8080.
 
 ---
 
-## Paso 8: Verificación de Funcionalidad - Operaciones CRUD
-
-### Crear Tareas (POST)
-
-![Crear Tarea 1](docs/images/18-api-post-1.png)
-
-![Crear Tarea 2](docs/images/19-api-post-2.png)
-
-![Crear Tarea 3](docs/images/20-api-post-3.png)
-
-### Listar Tareas (GET)
-
-![Listar Tareas](docs/images/21-api-get.png)
-
-### Completar Tarea (PUT)
-
-![Completar Tarea](docs/images/22-api-put.png)
-
-![Verificar Completada](docs/images/23-api-get-completed.png)
-
-### Eliminar Tarea (DELETE)
-
-![Eliminar Tarea](docs/images/24-api-delete.png)
-
-![Verificar Eliminación](docs/images/25-api-get-deleted.png)
+## Paso 9: Verificación de Funcionalidad - Operaciones CRUD
 
 Con el servicio en ejecución, se demuestran todas las operaciones CRUD sobre la API REST expuesta.
 
----
-
-## Paso 9: Consulta de Todas las Tareas
-
-Para obtener un listado completo de todas las tareas almacenadas en el sistema:
+### Crear Tareas y Consultar (POST y GET)
 
 ```bash
-curl -s http://localhost:8080/api/tasks | jq '.'
+# Crear primera tarea
+curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Configurar Docker","description":"Crear Dockerfile multi-stage y docker-compose para despliegue"}'
+
+# Crear segunda tarea
+curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Disenar arquitectura del sistema","description":"Definir capas de dominio, casos de uso y adaptadores según Clean Architecture"}'
+
+# Listar todas las tareas
+curl http://localhost:8080/api/tasks
 ```
 
-El comando utiliza `jq` para formatear la respuesta JSON de manera legible. Si `jq` no está disponible en el sistema, se puede omitir esta parte y obtener la respuesta JSON sin formateo.
+![Creación y consulta de tareas](docs/images/17-api-post-get.png)
 
-**Respuesta esperada:**
-Un array JSON conteniendo todas las tareas creadas hasta el momento:
-```json
-[
-  {
-    "id": "402dbc48-5169-436a-beda-f79bc08fb7cb",
-    "title": "Estudiar Clean Architecture",
-    "description": "Repasar conceptos fundamentales para evaluación",
-    "completed": false
-  }
-]
-```
+Se crean múltiples tareas y luego se consultan todas. La respuesta muestra un array JSON con todas las tareas almacenadas, cada una con su identificador único, título, descripción y estado de completitud.
 
----
-
-## Paso 10: Actualización del Estado de una Tarea
-
-Para marcar una tarea como completada, se utiliza el endpoint correspondiente reemplazando `{ID}` con el identificador de la tarea:
+### Completar Tarea (PUT)
 
 ```bash
-curl -X PUT http://localhost:8080/api/tasks/{ID}/complete
+# Marcar tarea como completada
+curl -X PUT http://localhost:8080/api/tasks/a0e6aea1-124e-432e-8064-75c26408d646/complete
+
+# Verificar el cambio
+curl http://localhost:8080/api/tasks
 ```
 
-**Ejemplo con identificador real:**
-```bash
-curl -X PUT http://localhost:8080/api/tasks/402dbc48-5169-436a-beda-f79bc08fb7cb/complete
-```
+![Completar tarea y verificación](docs/images/18-api-put-complete.png)
 
-**Verificación del cambio:**
-```bash
-curl -s http://localhost:8080/api/tasks | jq '.'
-```
+Al marcar una tarea como completada, el campo `completed` cambia de `false` a `true`. La consulta posterior confirma que el estado se actualizó correctamente en el sistema.
 
-La respuesta debe mostrar la misma tarea pero con el campo `completed` ahora establecido en `true`, reflejando el cambio de estado realizado.
-
----
-
-## Paso 11: Eliminación de Tareas
-
-Para remover una tarea del sistema:
+### Eliminar Tarea (DELETE)
 
 ```bash
-curl -X DELETE http://localhost:8080/api/tasks/{ID}
+# Eliminar tarea
+curl -X DELETE http://localhost:8080/api/tasks/a0e6aea1-124e-432e-8064-75c26408d646
+
+# Verificar la eliminación
+curl http://localhost:8080/api/tasks
 ```
 
-**Verificación de la eliminación:**
-```bash
-curl -s http://localhost:8080/api/tasks | jq '.'
-```
+![Eliminación de tarea y verificación](docs/images/19-api-delete.png)
 
-Si la tarea eliminada era la única en el sistema, la respuesta será un array vacío: `[]`
+Después de eliminar una tarea, la consulta subsiguiente muestra que ya no aparece en la lista de tareas, confirmando que fue removida exitosamente del sistema.
 
 ---
 
-## Paso 12: Monitoreo de Logs en Tiempo Real
+## Paso 10: Monitoreo de Logs en Tiempo Real
 
 Para observar el comportamiento interno del microservicio en tiempo real:
 
@@ -331,45 +291,24 @@ Para observar el comportamiento interno del microservicio en tiempo real:
 docker compose logs -f clean-service
 ```
 
-Este comando muestra los logs del contenedor de forma continua (flag `-f` de follow). Se pueden observar todas las peticiones HTTP recibidas, las operaciones ejecutadas y cualquier mensaje de log generado por la aplicación.
+![Logs en tiempo real del servicio](docs/images/20-docker-logs-follow.png)
 
-Para detener la visualización de logs, presionar `Ctrl+C`.
+Este comando muestra los logs del contenedor de forma continua (flag `-f` de follow). Se pueden observar todas las peticiones HTTP recibidas, las operaciones ejecutadas y cualquier mensaje de log generado por la aplicación. Para detener la visualización de logs, presionar `Ctrl+C`.
 
 ---
 
-## Paso 13: Detención del Servicio
+## Paso 11: Detención del Servicio
 
 Cuando se finaliza el trabajo con el microservicio:
 
 ```bash
 docker compose down
+docker compose ps
 ```
 
-Este comando detiene y elimina los contenedores en ejecución. Las imágenes Docker permanecen almacenadas localmente para facilitar futuros despliegues sin necesidad de reconstruirlas.
+![Detención del servicio](docs/images/21-docker-down.png)
 
----
-
-## Evidencias Adicionales
-
-### Estadísticas del Proyecto
-
-![Estadísticas del Código](docs/images/26-estadisticas.png)
-
-![Historial de Commits](docs/images/27-git-log.png)
-
-### Documentación
-
-![README](docs/images/28-readme.png)
-
-![Guión de Presentación](docs/images/29-guion.png)
-
-### Monitoreo
-
-![Logs en Tiempo Real](docs/images/30-logs.png)
-
-### Detención del Servicio
-
-![Docker Compose Down](docs/images/31-docker-down.png)
+Este comando detiene y elimina los contenedores en ejecución. La verificación con `docker compose ps` confirma que no hay contenedores activos. Las imágenes Docker permanecen almacenadas localmente para facilitar futuros despliegues sin necesidad de reconstruirlas.
 
 ---
 
