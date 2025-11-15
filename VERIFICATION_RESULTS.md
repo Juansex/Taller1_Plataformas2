@@ -4,11 +4,11 @@
 2025-11-15
 
 ## Repository Structure
-✅ All 5 microservices are present and correctly structured
+ All 5 microservices are present and correctly structured
 
 ## Build & Dependency Test Results
 
-### 1. auth-api (Go) ✅ PASSED
+### 1. auth-api (Go)  PASSED
 - **Status**: Successfully built
 - **Build Command**: `go mod init && go mod tidy && go build`
 - **Output Binary**: `auth-api` (11MB)
@@ -36,7 +36,7 @@ curl -X POST http://127.0.0.1:8000/login -d '{"username": "admin","password": "a
 
 ---
 
-### 2. users-api (Java/Spring Boot) ✅ PASSED
+### 2. users-api (Java/Spring Boot)  PASSED
 - **Status**: Successfully built
 - **Build Command**: `./mvnw clean package -DskipTests`
 - **Output JAR**: `target/users-api-0.0.1-SNAPSHOT.jar` (36MB)
@@ -61,7 +61,7 @@ curl -X GET -H "Authorization: Bearer $token" http://127.0.0.1:8083/users
 
 ---
 
-### 3. todos-api (Node.js) ✅ PASSED
+### 3. todos-api (Node.js)  PASSED
 - **Status**: Dependencies installed successfully
 - **Build Command**: `npm install`
 - **Installed Packages**: 221 packages
@@ -86,7 +86,7 @@ curl -X POST -H "Authorization: Bearer $token" http://127.0.0.1:8082/todos -d '{
 
 ---
 
-### 4. frontend (Vue.js) ⚠️ NEEDS ATTENTION
+### 4. frontend (Vue.js)  NEEDS ATTENTION
 - **Status**: Dependencies installation has issues
 - **Issue**: node-sass requires Python 2.x but system has Python 3.12
 - **Recommended Fix**: Use peer solution approach (felipevelasco7) with `--legacy-peer-deps`
@@ -106,7 +106,7 @@ npm run build
 
 ---
 
-### 5. log-message-processor (Python) ✅ PASSED
+### 5. log-message-processor (Python)  PASSED
 - **Status**: Dependencies installed successfully
 - **Build Command**: `pip3 install -r requirements.txt`
 - **Installed Packages**: redis, py_zipkin, cython
@@ -127,13 +127,13 @@ REDIS_HOST=127.0.0.1 REDIS_PORT=6379 REDIS_CHANNEL=log_channel python3 main.py
 
 ## Summary
 
-### ✅ Fully Working (4/5)
+###  Fully Working (4/5)
 1. auth-api (Go)
 2. users-api (Java/Spring Boot)
 3. todos-api (Node.js)
 4. log-message-processor (Python)
 
-### ⚠️ Needs Minor Fix (1/5)
+###  Needs Minor Fix (1/5)
 5. frontend (Vue.js) - Requires `--legacy-peer-deps` flag for npm install
 
 ## Next Steps for Video Demonstration
@@ -183,10 +183,10 @@ REDIS_HOST=127.0.0.1 REDIS_PORT=6379 REDIS_CHANNEL=log_channel python3 main.py
 5. **Access UI**: Open http://127.0.0.1:8080
 
 ## Repository Status
-✅ Repository is correctly structured
-✅ All microservices are buildable
-✅ Ready for deployment and demonstration
-⚠️ Frontend requires minor fix (use --legacy-peer-deps)
+ Repository is correctly structured
+ All microservices are buildable
+ Ready for deployment and demonstration
+ Frontend requires minor fix (use --legacy-peer-deps)
 
 ---
 

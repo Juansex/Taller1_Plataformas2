@@ -22,8 +22,8 @@
 
 ```
 AUTH_API_PORT                    = 8000
-USERS_API_ADDRESS               = http://users-api:8080         ⚠️ NO tcp://
-JWT_SECRET                       = PRFT                          ⚠️ IGUAL en todos los servicios
+USERS_API_ADDRESS               = http://users-api:8080          NO tcp://
+JWT_SECRET                       = PRFT                           IGUAL en todos los servicios
 ZIPKIN_URL                       = http://zipkin:9411/api/v2/spans
 
 TODO_API_PORT                    = 3000
@@ -56,7 +56,7 @@ k8s-manifests/
 
 ---
 
-## 🐳 COMANDOS DOCKER
+##  COMANDOS DOCKER
 
 | Tarea | Comando |
 |-------|---------|
@@ -129,7 +129,7 @@ echo "http://${MINIKUBE_IP}:30001"                     # Grafana
 
 ---
 
-## 🔐 USUARIOS HARDCODEADOS (Auth API)
+##  USUARIOS HARDCODEADOS (Auth API)
 
 | Username | Password | Role |
 |----------|----------|------|
@@ -139,7 +139,7 @@ echo "http://${MINIKUBE_IP}:30001"                     # Grafana
 
 ---
 
-## 📊 ENDPOINTS HTTP
+##  ENDPOINTS HTTP
 
 ### Auth API (POST)
 ```
@@ -167,7 +167,7 @@ Authorization: Bearer <JWT_TOKEN> (requerido)
 
 ---
 
-## 🐛 TROUBLESHOOTING RÁPIDO
+##  TROUBLESHOOTING RÁPIDO
 
 | Problema | Causa | Solución |
 |----------|-------|----------|
@@ -276,7 +276,7 @@ minikube start --driver=docker               # Recrear cluster
 
 ---
 
-## 📚 ARCHIVOS MÁS IMPORTANTES
+##  ARCHIVOS MÁS IMPORTANTES
 
 ```
 k8s-manifests/               → Todos los manifiestos Kubernetes
@@ -290,7 +290,7 @@ frontend/config/index.js   → Configuración Webpack
 
 ---
 
-## ✅ CHECKLIST DE DESPLIEGUE
+##  CHECKLIST DE DESPLIEGUE
 
 ```
 ☐ Docker instalado
@@ -311,7 +311,7 @@ frontend/config/index.js   → Configuración Webpack
 
 ---
 
-## 🎯 REFERENCIAS RÁPIDAS
+##  REFERENCIAS RÁPIDAS
 
 - **Oficial Kubernetes:** https://kubernetes.io/docs
 - **Docker Hub (felipevelasco7):** https://hub.docker.com/u/felipevelasco7

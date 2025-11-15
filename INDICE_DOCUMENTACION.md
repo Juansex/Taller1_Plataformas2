@@ -1,6 +1,6 @@
-# 📚 Índice de Documentación Completa
+#  Índice de Documentación Completa
 
-## 🎯 Comienza Aquí
+##  Comienza Aquí
 
 1. **[RESUMEN_INTEGRACION.md](RESUMEN_INTEGRACION.md)** ← 📍 **EMPIEZA AQUÍ**
    - Resumen ejecutivo de lo que se ha preparado
@@ -8,7 +8,7 @@
    - Flujo recomendado para el video
    - Checklist rápido
 
-2. **[demo.sh](demo.sh)** ← ⚡ **MANERA MÁS RÁPIDA**
+2. **[demo.sh](demo.sh)** ←  **MANERA MÁS RÁPIDA**
    - Script bash que levanta todo automáticamente
    - Verifica requisitos
    - Ejecuta docker-compose build + up
@@ -16,7 +16,7 @@
 
 ---
 
-## 🐳 Docker & Docker Compose
+##  Docker & Docker Compose
 
 3. **[GUIA_DOCKER_COMPOSE.md](GUIA_DOCKER_COMPOSE.md)** ← 📖 **GUÍA PRINCIPAL**
    - Instrucciones paso a paso con explicaciones
@@ -48,7 +48,7 @@
 
 ---
 
-## 📊 Análisis & Referencia
+##  Análisis & Referencia
 
 6. **[RESUMEN_EJECUTIVO_MICROSERVICES.md](RESUMEN_EJECUTIVO_MICROSERVICES.md)**
    - Análisis del proyecto original
@@ -115,7 +115,7 @@ demo.sh                                  Script de ejecución automática
 
 ---
 
-## 🚀 Flujos de Uso
+##  Flujos de Uso
 
 ### Opción A: Docker Compose (RECOMENDADO para video)
 
@@ -148,7 +148,7 @@ docker-compose up          # 2-3 min
 
 ---
 
-## 📊 Servicios Disponibles
+##  Servicios Disponibles
 
 | Servicio | Tecnología | Puerto | Dockerfile |
 |----------|-----------|--------|-----------|
@@ -163,7 +163,7 @@ docker-compose up          # 2-3 min
 
 ---
 
-## 🎬 Flujo Recomendado para Presentación
+##  Flujo Recomendado para Presentación
 
 **Tiempo: 5-7 minutos**
 
@@ -199,7 +199,7 @@ docker-compose up          # 2-3 min
 
 ---
 
-## 🎯 Checklist Pre-Video
+##  Checklist Pre-Video
 
 - [ ] Leí RESUMEN_INTEGRACION.md
 - [ ] Tengo Docker y Docker Compose instalados
@@ -248,7 +248,7 @@ docker-compose up          # 2-3 min
 
 ---
 
-## 📝 Notas Importantes
+##  Notas Importantes
 
 - Todos los comandos están en **bash** (Linux/Mac)
 - Para **Windows**, usa WSL2 o reemplaza paths según necesidad
@@ -281,5 +281,5 @@ Después de validar con Docker Compose:
 
 ---
 
-¡**Estás 100% listo para la presentación!** 🚀
+¡**Estás 100% listo para la presentación!** 
 

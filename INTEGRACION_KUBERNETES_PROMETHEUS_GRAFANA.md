@@ -1,10 +1,10 @@
-# 🚀 Integración Kubernetes + Prometheus + Grafana
+#  Integración Kubernetes + Prometheus + Grafana
 
-## 📋 Análisis del Repositorio Original
+##  Análisis del Repositorio Original
 
 El repositorio de referencia (`felipevelasco7/microservice-app-example`) incluye:
 
-### ✅ Estructura Implementada
+###  Estructura Implementada
 ```
 microservice-app-example/
 ├── kubernetes/              # Configuración K8s
@@ -32,7 +32,7 @@ microservice-app-example/
 
 ---
 
-## 🎯 Recomendación: Híbrido (Local + Kubernetes)
+##  Recomendación: Híbrido (Local + Kubernetes)
 
 Dado que tu proyecto necesita ser presentado en video, te recomiendo un **enfoque híbrido**:
 
@@ -48,7 +48,7 @@ Dado que tu proyecto necesita ser presentado en video, te recomiendo un **enfoqu
 
 ---
 
-## 📝 Plan de Acción Necesario
+##  Plan de Acción Necesario
 
 ### 1. Crear Dockerfiles (para cada servicio)
 ### 2. Crear docker-compose.yml (con Prometheus + Grafana)
@@ -58,7 +58,7 @@ Dado que tu proyecto necesita ser presentado en video, te recomiendo un **enfoqu
 
 ---
 
-## 🐳 PASO 1: Crear Dockerfiles
+##  PASO 1: Crear Dockerfiles
 
 ### 1.1 Dockerfile para Auth API (Go)
 
@@ -259,7 +259,7 @@ http {
 
 ---
 
-## 🐳 PASO 2: Crear docker-compose.yml (Con Prometheus + Grafana)
+##  PASO 2: Crear docker-compose.yml (Con Prometheus + Grafana)
 
 Crea: `docker-compose.yml` en la raíz
 
@@ -435,7 +435,7 @@ networks:
 
 ---
 
-## 📊 PASO 3: Configurar Prometheus
+##  PASO 3: Configurar Prometheus
 
 Crea: `prometheus/prometheus.yml`
 
@@ -570,7 +570,7 @@ Este es un dashboard complejo. Aquí una versión simplificada:
 
 ---
 
-## 🚀 PASO 5: Construir e Iniciar con Docker Compose
+##  PASO 5: Construir e Iniciar con Docker Compose
 
 ### Comando 5.1: Construir todas las imágenes
 ```bash
@@ -627,7 +627,7 @@ grafana             "/run.sh"                Up
 
 ---
 
-## 🌐 Acceso a Servicios
+##  Acceso a Servicios
 
 Una vez levantado con `docker-compose up`:
 
@@ -722,7 +722,7 @@ spec:
 
 ---
 
-## 📊 Métricas en Grafana
+##  Métricas en Grafana
 
 Una vez en Grafana (http://localhost:3000):
 
@@ -736,7 +736,7 @@ Una vez en Grafana (http://localhost:3000):
 
 ---
 
-## 🎬 Flujo para el Video
+##  Flujo para el Video
 
 1. **Mostrar docker-compose.yml** - Explicar arquitectura
 2. **`docker-compose build`** - Compilar imágenes

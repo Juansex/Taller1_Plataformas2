@@ -13,7 +13,7 @@ docker-compose up
 
 ---
 
-## 🌐 URLs de Acceso
+##  URLs de Acceso
 
 | Aplicación | URL | Usuario | Contraseña |
 |-----------|-----|---------|------------|
@@ -23,7 +23,7 @@ docker-compose up
 
 ---
 
-## 📊 APIs Internas
+##  APIs Internas
 
 ```bash
 # Auth API
@@ -78,7 +78,7 @@ docker system prune -a --volumes
 
 ---
 
-## 🔧 Troubleshooting Rápido
+##  Troubleshooting Rápido
 
 ```bash
 # Ver estado de contenedores
@@ -99,7 +99,7 @@ docker-compose exec auth-api sh
 
 ---
 
-## 📝 Documentación Por Tema
+##  Documentación Por Tema
 
 | Necesito... | Lee... |
 |----------|--------|
@@ -112,7 +112,7 @@ docker-compose exec auth-api sh
 
 ---
 
-## 🎬 Flujo Video (5 minutos)
+##  Flujo Video (5 minutos)
 
 ```bash
 # Terminal 1: Ejecutar
@@ -129,7 +129,7 @@ docker-compose logs -f log-processor
 
 ---
 
-## ✅ Checklist Pre-Video
+##  Checklist Pre-Video
 
 ```bash
 # 1. Verificar Docker
@@ -153,7 +153,7 @@ lsof -i :3000
 
 ---
 
-## 🐳 Estructura Docker
+##  Estructura Docker
 
 ```
 docker-compose.yml
@@ -169,7 +169,7 @@ docker-compose.yml
 
 ---
 
-## 📊 Métricas Importantes
+##  Métricas Importantes
 
 En Prometheus (http://localhost:9090):
 

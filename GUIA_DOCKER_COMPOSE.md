@@ -409,7 +409,7 @@ docker-compose logs -f auth-api users-api todos-api
 
 ---
 
-## 🛑 PASO 8: Detener Todo
+##  PASO 8: Detener Todo
 
 ### Comando 8.1 - Detener sin eliminar
 ```bash

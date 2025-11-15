@@ -542,11 +542,11 @@ curl -X POST http://127.0.0.1:8082/todos \
 **Lo que debes decir:**
 "En resumen, hemos demostrado:"
 
-1. ✅ "Que corregimos exitosamente la estructura del proyecto"
-2. ✅ "Que compilamos e instalamos los 5 microservicios"
-3. ✅ "Que todos los servicios se ejecutan correctamente"
-4. ✅ "Que la comunicación entre servicios funciona"
-5. ✅ "Que tanto las APIs REST como la interfaz gráfica operan correctamente"
+1.  "Que corregimos exitosamente la estructura del proyecto"
+2.  "Que compilamos e instalamos los 5 microservicios"
+3.  "Que todos los servicios se ejecutan correctamente"
+4.  "Que la comunicación entre servicios funciona"
+5.  "Que tanto las APIs REST como la interfaz gráfica operan correctamente"
 6. "Que el sistema de logs con Redis funciona en tiempo real"
 
 "El proyecto está completamente funcional y listo para producción. Toda la documentación está disponible en el repositorio de GitHub."
@@ -610,4 +610,4 @@ Antes de empezar a grabar, verifica que tienes:
 
 ---
 
-**¡Buena suerte con tu video! 🎬**
+**¡Buena suerte con tu video! **

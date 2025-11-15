@@ -1,19 +1,19 @@
-# 🎯 Resumen Ejecutivo - Integración Kubernetes + Prometheus + Grafana
+#  Resumen Ejecutivo - Integración Kubernetes + Prometheus + Grafana
 
-## 📊 ¿Qué Hemos Preparado?
+##  ¿Qué Hemos Preparado?
 
 Has solicitado transformar tu proyecto de microservicios para incluir:
-- ✅ **Docker** - Containerización
-- ✅ **Docker Compose** - Orquestación local
-- ✅ **Prometheus** - Recolección de métricas
-- ✅ **Grafana** - Visualización y monitoreo
+-  **Docker** - Containerización
+-  **Docker Compose** - Orquestación local
+-  **Prometheus** - Recolección de métricas
+-  **Grafana** - Visualización y monitoreo
 - ⏳ **Kubernetes** - Orquestación en producción (siguiente paso)
 
 ---
 
-## 📂 Archivos Creados
+##  Archivos Creados
 
-### 🐳 Dockerfiles (Para containerizar cada servicio)
+###  Dockerfiles (Para containerizar cada servicio)
 
 ```
 auth-api/Dockerfile          ← Go multi-stage build
@@ -24,7 +24,7 @@ frontend/Dockerfile          ← Node.js + Nginx (build + serve)
 frontend/nginx.conf          ← Configuración Nginx
 ```
 
-### 🔧 Orquestación & Configuración
+###  Orquestación & Configuración
 
 ```
 docker-compose.yml           ← Define 8 servicios (APIs + Redis + Prometheus + Grafana)
@@ -33,7 +33,7 @@ grafana/provisioning/datasources/prometheus.yml  ← Conexión Prometheus-Grafan
 grafana/provisioning/dashboards/dashboards.yml   ← Carga automática de dashboards
 ```
 
-### 📚 Documentación Completa
+###  Documentación Completa
 
 ```
 GUIA_DOCKER_COMPOSE.md                           ← Paso a paso Docker Compose
@@ -43,7 +43,7 @@ GUIA_PRUEBAS.md                                  ← Pruebas con terminal nativa
 
 ---
 
-## 🚀 Cómo Ejecutar (Lo que necesitas hacer)
+##  Cómo Ejecutar (Lo que necesitas hacer)
 
 ### Opción A: Docker Compose (Lo más rápido para video)
 
@@ -104,7 +104,7 @@ kubectl apply -f kubernetes/
 
 ---
 
-## 🎬 Flujo Recomendado para el Video
+##  Flujo Recomendado para el Video
 
 ```
 [0:00-0:30] Explicar arquitectura
@@ -150,7 +150,7 @@ kubectl apply -f kubernetes/
 
 ---
 
-## 📊 Arquitectura Vista General
+##  Arquitectura Vista General
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -265,25 +265,25 @@ redis_operations_total
 
 ---
 
-## 🎯 Ventajas de esta Arquitectura
+##  Ventajas de esta Arquitectura
 
 ### Docker Compose
-✅ Fácil de levantar localmente
-✅ Perfecto para desarrollo y pruebas
-✅ Exacto para la presentación en video
-✅ Todo en comandos simples
+ Fácil de levantar localmente
+ Perfecto para desarrollo y pruebas
+ Exacto para la presentación en video
+ Todo en comandos simples
 
 ### Prometheus + Grafana
-✅ Monitoreo en tiempo real
-✅ Visualización clara de métricas
-✅ Alertas configurables
-✅ Histórico de datos
+ Monitoreo en tiempo real
+ Visualización clara de métricas
+ Alertas configurables
+ Histórico de datos
 
 ### Kubernetes (Next Step)
-✅ Escalabilidad automática
-✅ Auto-recuperación de fallos
-✅ Load balancing
-✅ Gestión de recursos
+ Escalabilidad automática
+ Auto-recuperación de fallos
+ Load balancing
+ Gestión de recursos
 
 ---
 
@@ -303,7 +303,7 @@ CI/CD:         (Opcional: GitHub Actions)
 
 ---
 
-## 📝 Próximos Pasos (Después del Video)
+##  Próximos Pasos (Después del Video)
 
 1. **Agregar expositores de métricas** a servicios sin ellas
    - Go: `prometheus/promhttp` ✓ (ya configurado)
@@ -354,7 +354,7 @@ CI/CD:         (Opcional: GitHub Actions)
 
 ---
 
-## 🎬 ¡Listo para Grabar!
+##  ¡Listo para Grabar!
 
 Tienes todo lo necesario. Solo falta:
 

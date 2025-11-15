@@ -3,7 +3,7 @@
 
 ---
 
-## 🎯 DESCRIPCIÓN GENERAL
+##  DESCRIPCIÓN GENERAL
 
 **Proyecto:** Aplicación TODO distribuida con arquitectura de microservicios  
 **Lenguajes:** Go, Python, Vue.js, Java, Node.js  
@@ -13,7 +13,7 @@
 
 ---
 
-## 📊 COMPONENTES PRINCIPALES
+##  COMPONENTES PRINCIPALES
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -42,7 +42,7 @@
 
 ---
 
-## 🐳 DOCKER
+##  DOCKER
 
 ### Imágenes Generadas
 
@@ -293,7 +293,7 @@ microservice-app-example/
 
 ---
 
-## 🚀 FLUJO DE DESPLIEGUE RÁPIDO
+##  FLUJO DE DESPLIEGUE RÁPIDO
 
 ### 1. Build & Push de Imágenes
 
@@ -368,11 +368,11 @@ kubectl port-forward svc/grafana 3000:3000
 - `http://todos-api:3000`
 - `redis:6379`
 
-**⚠️ NOTA:** No usar `tcp://` en direcciones, debe ser `http://` o nombre del servicio
+** NOTA:** No usar `tcp://` en direcciones, debe ser `http://` o nombre del servicio
 
 ---
 
-## 📝 SOLUCIÓN DE PROBLEMAS
+##  SOLUCIÓN DE PROBLEMAS
 
 | Error | Causa | Solución |
 |-------|-------|----------|
@@ -384,7 +384,7 @@ kubectl port-forward svc/grafana 3000:3000
 
 ---
 
-## 📚 REFERENCIAS RÁPIDAS
+##  REFERENCIAS RÁPIDAS
 
 ### Puertos Principales
 
@@ -413,7 +413,7 @@ kubectl edit cm <nombre-configmap> # Editar ConfigMap
 
 ---
 
-## ✅ CHECKLIST DE DESPLIEGUE
+##  CHECKLIST DE DESPLIEGUE
 
 - [ ] Docker instalado y corriendo
 - [ ] kubectl y Minikube instalados
