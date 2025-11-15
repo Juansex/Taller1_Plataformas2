@@ -123,8 +123,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -148,7 +148,7 @@ services:
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./config/grafana:/etc/grafana/provisioning
     depends_on:
       - prometheus
     networks:

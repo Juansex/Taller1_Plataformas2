@@ -1,18 +1,22 @@
 # Go modules cache
 root/
+*.mod
+*.sum
 
 # Build artifacts
 auth-api/auth-api
-auth-api/go.mod
-auth-api/go.sum
 users-api/target/
 todos-api/node_modules/
+log-message-processor/__pycache__/
 frontend/node_modules/
 frontend/dist/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # OS
 .DS_Store
@@ -22,3 +26,19 @@ Thumbs.db
 __pycache__/
 *.pyc
 *.pyo
+*.egg-info/
+.Python
+
+# Node.js
+npm-debug.log
+yarn-error.log
+
+# Java
+.classpath
+.project
+.settings/
+*.iml
+
+# Build files
+*.o
+*.a
