@@ -1,6 +1,15 @@
 # Go modules cache
 root/
 
+# Build artifacts
+auth-api/auth-api
+auth-api/go.mod
+auth-api/go.sum
+users-api/target/
+todos-api/node_modules/
+frontend/node_modules/
+frontend/dist/
+
 # IDE
 .vscode/
 .idea/
@@ -8,3 +17,8 @@ root/
 # OS
 .DS_Store
 Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
