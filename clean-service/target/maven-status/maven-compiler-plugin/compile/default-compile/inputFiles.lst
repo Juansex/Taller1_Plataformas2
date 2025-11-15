@@ -1,6 +1,0 @@
-/workspaces/Taller1_Plataformas2/clean-service/src/main/java/com/example/clean/domain/TaskRepository.java
-/workspaces/Taller1_Plataformas2/clean-service/src/main/java/com/example/clean/usecase/TaskService.java
-/workspaces/Taller1_Plataformas2/clean-service/src/main/java/com/example/clean/adapter/outbound/InMemoryTaskRepository.java
-/workspaces/Taller1_Plataformas2/clean-service/src/main/java/com/example/clean/adapter/inbound/TaskController.java
-/workspaces/Taller1_Plataformas2/clean-service/src/main/java/com/example/clean/domain/Task.java
-/workspaces/Taller1_Plataformas2/clean-service/src/main/java/com/example/clean/CleanServiceApplication.java
