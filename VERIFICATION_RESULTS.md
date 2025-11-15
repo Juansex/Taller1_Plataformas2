@@ -190,6 +190,5 @@ REDIS_HOST=127.0.0.1 REDIS_PORT=6379 REDIS_CHANNEL=log_channel python3 main.py
 
 ---
 
-**Prepared by**: GitHub Copilot Agent
 **Date**: 2025-11-15
 **Reference**: Based on bortizf/microservice-app-example and felipevelasco7/microservice-app-example

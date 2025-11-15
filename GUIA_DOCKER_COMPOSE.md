@@ -1,6 +1,6 @@
-# 🐳 Guía Docker Compose - Microservicios + Monitoreo
+# Guia Docker Compose - Microservicios + Monitoreo
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 Asegúrate de tener instalados:
 - Docker (versión 20.10+)
@@ -14,7 +14,7 @@ docker-compose --version
 
 ---
 
-## 🔧 PASO 1: Preparar el Entorno
+## PASO 1: Preparar el Entorno
 
 ### Comando 1.1
 ```bash
@@ -41,7 +41,7 @@ Total reclaimed space: 1.2GB
 
 ---
 
-## 🏗️ PASO 2: Construir las Imágenes Docker
+## PASO 2: Construir las Imágenes Docker
 
 ### Comando 2.1
 ```bash
@@ -110,7 +110,7 @@ taller1_log-processor     latest      mno345pqr678
 
 ---
 
-## 🚀 PASO 3: Iniciar los Servicios
+## PASO 3: Iniciar los Servicios
 
 ### Comando 3.1
 ```bash
@@ -164,7 +164,7 @@ grafana         /run.sh                 Up            0.0.0.0:3000->3000/tcp
 
 ---
 
-## ✅ PASO 4: Verificar Servicios
+## PASO 4: Verificar Servicios
 
 ### Comando 4.1 (En nueva terminal)
 ```bash
@@ -247,7 +247,7 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8082/todos
 
 ---
 
-## 🌐 PASO 5: Acceder a las Aplicaciones
+## PASO 5: Acceder a las Aplicaciones
 
 Abre en tu navegador:
 
@@ -300,7 +300,7 @@ http://localhost:3000
 
 ---
 
-## 📊 PASO 6: Crear TODOs y Ver Monitoreo
+## PASO 6: Crear TODOs y Ver Monitoreo
 
 ### En el Frontend (localhost:8080):
 
@@ -364,7 +364,7 @@ Haz click en "Execute"
 
 ---
 
-## 📝 PASO 7: Ver Logs en Tiempo Real
+## PASO 7: Ver Logs en Tiempo Real
 
 ### Comando 7.1 - Ver logs de todos los servicios
 ```bash
@@ -438,7 +438,7 @@ docker-compose down -v
 
 ---
 
-## 🎬 Flujo Completo para el Video
+## Flujo Completo para el Video
 
 **Tiempo estimado: 5 minutos de demostración**
 
@@ -535,7 +535,7 @@ docker-compose logs auth-api
 
 ---
 
-## 📊 Referencia Rápida de Puertos
+## Referencia Rápida de Puertos
 
 | Servicio | Puerto | URL |
 |----------|--------|-----|

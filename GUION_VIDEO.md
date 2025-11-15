@@ -252,7 +252,7 @@ cd ..
 
 ---
 
-## ▶️ Parte 4: Ejecución de los Microservicios (10-12 minutos)
+## Parte 4: Ejecución de los Microservicios (10-12 minutos)
 
 ### **[ESCENA 10: Preparar Terminales]**
 **Lo que debes decir:**
@@ -362,7 +362,7 @@ PORT=8080 AUTH_API_ADDRESS=http://127.0.0.1:8000 TODOS_API_ADDRESS=http://127.0.
 
 ---
 
-## 🧪 Parte 5: Demostración de Funcionalidad (8-10 minutos)
+## Parte 5: Demostración de Funcionalidad (8-10 minutos)
 
 ### **[ESCENA 16: Probar Auth API con curl]**
 **Lo que debes decir:**
@@ -547,7 +547,7 @@ curl -X POST http://127.0.0.1:8082/todos \
 3. ✅ "Que todos los servicios se ejecutan correctamente"
 4. ✅ "Que la comunicación entre servicios funciona"
 5. ✅ "Que tanto las APIs REST como la interfaz gráfica operan correctamente"
-6. ✅ "Que el sistema de logs con Redis funciona en tiempo real"
+6. "Que el sistema de logs con Redis funciona en tiempo real"
 
 "El proyecto está completamente funcional y listo para producción. Toda la documentación está disponible en el repositorio de GitHub."
 
@@ -575,7 +575,7 @@ docker rm redis
 
 ---
 
-## 📌 Notas Finales para el Video
+## Notas Finales para el Video
 
 ### Duración Total Estimada: 30-40 minutos
 
@@ -597,7 +597,7 @@ docker rm redis
 
 ---
 
-## ✅ Checklist Pre-Grabación
+## Checklist Pre-Grabación
 
 Antes de empezar a grabar, verifica que tienes:
 - [ ] Todas las herramientas instaladas (Go, Java, Node, Python, Docker)

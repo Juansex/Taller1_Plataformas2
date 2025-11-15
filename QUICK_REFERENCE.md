@@ -3,7 +3,7 @@
 
 ---
 
-## 📋 COMPONENTES DEL SISTEMA
+## COMPONENTES DEL SISTEMA
 
 | Componente | Lenguaje | Puerto | Tipo Build | Key Files | Función |
 |-----------|----------|--------|-----------|-----------|---------|
@@ -18,7 +18,7 @@
 
 ---
 
-## 🔧 VARIABLES DE ENTORNO CRÍTICAS
+## VARIABLES DE ENTORNO CRÍTICAS
 
 ```
 AUTH_API_PORT                    = 8000
@@ -38,7 +38,7 @@ AUTH_API_ADDRESS                = http://auth-api:8000           (Frontend)
 
 ---
 
-## 📁 ESTRUCTURA DE MANIFIESTOS KUBERNETES
+## ESTRUCTURA DE MANIFIESTOS KUBERNETES
 
 ```
 k8s-manifests/

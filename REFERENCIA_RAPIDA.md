@@ -1,6 +1,6 @@
-# ⚡ Referencia Rápida - Comandos Esenciales
+# Referencia Rápida - Comandos Esenciales
 
-## 🚀 Iniciar TODO (La forma más rápida)
+## Iniciar TODO (La forma más rápida)
 
 ```bash
 # Opción 1: Automática (Recomendada)
@@ -60,7 +60,7 @@ docker-compose logs -f frontend
 
 ---
 
-## 🛑 Detener & Limpiar
+## Detener & Limpiar
 
 ```bash
 # Pausar servicios (mantiene datos)
@@ -189,7 +189,7 @@ up
 
 ---
 
-## 🎯 Variables de Entorno
+## Variables de Entorno
 
 ```bash
 # Auth API
@@ -211,5 +211,5 @@ REDIS_PORT=6379
 
 ---
 
-¡Listo! Usa esta referencia rápida durante la presentación. 🚀
+¡Listo! Usa esta referencia rápida durante la presentación.
 
