@@ -2,9 +2,9 @@
 
 Aplicación de ejemplo basada en arquitectura de microservicios para el curso de Plataformas 2. Este proyecto implementa una aplicación TODO utilizando 5 microservicios diferentes, cada uno construido con tecnologías distintas (Go, Java, Node.js, Python, Vue.js).
 
-> 🎬 **Para demostración en video**: Consulta el archivo **[GUION_VIDEO.md](GUION_VIDEO.md)** que contiene un guion completo paso a paso para grabar tu presentación.
+> **Para demostración en video**: Consulta el archivo **[GUION_VIDEO.md](GUION_VIDEO.md)** que contiene un guion completo paso a paso para la presentación.
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 - [Componentes](#componentes)
 - [Arquitectura](#arquitectura)
 - [Requisitos](#requisitos)
@@ -14,7 +14,7 @@ Aplicación de ejemplo basada en arquitectura de microservicios para el curso de
 - [Demostración Completa](#demostración-completa)
 - [Solución de Problemas](#solución-de-problemas)
 
-## 🏗️ Componentes
+## Componentes
 
 ### 1. [Auth API](/auth-api) (Go)
 Servicio de autenticación que genera tokens JWT.
@@ -45,7 +45,7 @@ Interfaz de usuario web.
 - **Tecnología**: Vue.js
 - **Función**: Interfaz gráfica para la aplicación
 
-## 🎯 Arquitectura
+## Arquitectura
 
 La aplicación sigue una arquitectura de microservicios donde cada componente es independiente y se comunica mediante APIs REST y colas de mensajes.
 
@@ -58,7 +58,7 @@ La aplicación sigue una arquitectura de microservicios donde cada componente es
 4. Las operaciones se registran en Redis
 5. **Log Message Processor** procesa los mensajes de Redis
 
-## 📦 Requisitos
+## Requisitos
 
 ### Herramientas Necesarias
 - **Go** >= 1.18.2
@@ -71,7 +71,7 @@ La aplicación sigue una arquitectura de microservicios donde cada componente es
 - **Redis** >= 7.0
 - **Docker** (opcional, para ejecutar Redis)
 
-## 🚀 Instalación y Configuración
+## Instalación y Configuración
 
 ### Paso 1: Clonar el Repositorio
 ```bash
@@ -129,7 +129,7 @@ npm install --legacy-peer-deps
 cd ..
 ```
 
-## ▶️ Ejecución de los Servicios
+## Ejecución de los Servicios
 
 ### Orden de Inicio Recomendado
 
@@ -163,7 +163,7 @@ cd frontend
 PORT=8080 AUTH_API_ADDRESS=http://127.0.0.1:8000 TODOS_API_ADDRESS=http://127.0.0.1:8082 npm start
 ```
 
-## 🧪 Pruebas
+## Pruebas
 
 ### Probar Auth API
 ```bash
@@ -204,7 +204,7 @@ curl -X GET http://127.0.0.1:8082/todos \
 ### Probar Frontend
 Abrir en el navegador: http://127.0.0.1:8080
 
-## 🎯 Demostración Completa
+## Demostración Completa
 
 ### Flujo Completo de Trabajo
 
@@ -273,7 +273,7 @@ curl -X GET http://127.0.0.1:8082/todos \
 - [ ] Frontend carga en puerto 8080 y permite login
 - [ ] Las operaciones desde el navegador aparecen en los logs
 
-## 🔧 Solución de Problemas
+## Solución de Problemas
 
 ### Frontend no compila (node-sass error)
 **Problema**: Error de Python con node-sass
@@ -310,7 +310,7 @@ lsof -i :8080  # Cambiar por el puerto que necesites
 kill -9 PID
 ```
 
-## 📚 Documentación Adicional
+## Documentación Adicional
 
 - **[Guion para Video Explicativo](GUION_VIDEO.md)** - Script completo paso a paso para grabar presentación
 - [Documentación detallada de pruebas](VERIFICATION_RESULTS.md)
@@ -320,11 +320,11 @@ kill -9 PID
 - [Log Message Processor README](log-message-processor/README.md)
 - [Frontend README](frontend/README.md)
 
-## 👥 Créditos
+## Créditos
 
 - Proyecto base: [bortizf/microservice-app-example](https://github.com/bortizf/microservice-app-example)
 - Referencia de implementación: [felipevelasco7/microservice-app-example](https://github.com/felipevelasco7/microservice-app-example)
 
-## 📝 Licencia
+## Licencia
 
 MIT License - Ver archivo [LICENSE](LICENSE)

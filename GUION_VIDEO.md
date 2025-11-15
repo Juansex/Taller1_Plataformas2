@@ -1,10 +1,10 @@
-# 🎬 Guion para Video Explicativo - Taller 1 Plataformas 2
+# Guion para Video Explicativo - Taller 1 Plataformas 2
 
-## 📝 Introducción al Video (2-3 minutos)
+## Introducción al Video (2-3 minutos)
 
 ### **[ESCENA 1: Presentación]**
 **Lo que debes decir:**
-"Hola, en este video voy a demostrar la implementación de una aplicación basada en microservicios para el Taller 1 de Plataformas 2. Este proyecto originalmente tenía un servicio incorrecto llamado 'clean-service', pero lo hemos corregido implementando la arquitectura correcta basada en el repositorio de referencia de microservice-app-example."
+"Hola, en este video voy a demostrar la implementación de una aplicación basada en microservicios para el Taller 1 de Plataformas 2. Este proyecto implementa una arquitectura de microservicios completa con 5 servicios diferentes desarrollados en lenguajes distintos."
 
 **Lo que debes mostrar:**
 - Mostrar el repositorio en GitHub
@@ -12,7 +12,7 @@
 
 ---
 
-## 🏗️ Parte 1: Explicación de la Arquitectura (3-4 minutos)
+## Parte 1: Explicación de la Arquitectura (3-4 minutos)
 
 ### **[ESCENA 2: Arquitectura]**
 **Lo que debes decir:**
@@ -51,7 +51,7 @@
 
 ---
 
-## 🔧 Parte 2: Preparación del Entorno (3-4 minutos)
+## Parte 2: Preparación del Entorno (3-4 minutos)
 
 ### **[ESCENA 3: Verificar Requisitos]**
 **Lo que debes decir:**
@@ -114,7 +114,7 @@ docker ps
 
 ---
 
-## 🚀 Parte 3: Compilación de los Microservicios (8-10 minutos)
+## Parte 3: Compilación de los Microservicios (8-10 minutos)
 
 ### **[ESCENA 5: Users API (Java)]**
 **Lo que debes decir:**

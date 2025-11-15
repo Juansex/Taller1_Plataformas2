@@ -1,6 +1,6 @@
-# 🧪 Guía de Pruebas - Taller 1 Plataformas 2
+# Guia de Pruebas - Taller 1 Plataformas 2
 
-## ⚡ Inicio Rápido (Quick Start)
+## Inicio Rápido (Quick Start)
 
 ### Paso 1: Verificar Requisitos
 ```bash
@@ -34,7 +34,7 @@ docker ps | grep redis
 
 ---
 
-## 🔨 Compilación de Servicios
+## Compilación de Servicios
 
 ### Paso 3: Compilar Users API (Java/Spring Boot)
 ```bash
@@ -99,7 +99,7 @@ ls -la frontend/node_modules | head -10
 
 ---
 
-## 🚀 Ejecución de Servicios (Abre 5 terminales)
+## Ejecución de Servicios (Abre 5 terminales)
 
 ### Terminal 1: Auth API (Go - Puerto 8000)
 ```bash
@@ -146,7 +146,7 @@ npm run dev
 
 ---
 
-## ✅ Pruebas Funcionales
+## Pruebas Funcionales
 
 ### Test 1: Verificar que todos los servicios están corriendo
 ```bash
@@ -258,7 +258,7 @@ curl -X DELETE http://localhost:8082/todos/$TASK_ID \
 
 ---
 
-## 🌐 Prueba en Frontend (Interfaz Gráfica)
+## Prueba en Frontend (Interfaz Gráfica)
 
 1. Abre navegador: **http://localhost:8080**
 2. **Login con**: 
@@ -272,7 +272,7 @@ curl -X DELETE http://localhost:8082/todos/$TASK_ID \
 
 ---
 
-## 🐛 Solución de Problemas
+## Solución de Problemas
 
 ### Redis no inicia
 ```bash
@@ -320,7 +320,7 @@ redis-cli ping
 
 ---
 
-## 📊 Checklist de Validación para el Video
+## Checklist de Validación para el Video
 
 - [ ] Redis corriendo (`docker ps`)
 - [ ] Auth API respondiendo (`curl localhost:8000/health`)
@@ -337,7 +337,7 @@ redis-cli ping
 
 ---
 
-## 🎬 Orden para el Video
+## Orden para el Video
 
 1. **Mostrar requisitos**: `go version`, `java -version`, etc.
 2. **Iniciar Redis**: `docker run ...`
@@ -351,7 +351,7 @@ redis-cli ping
 
 ---
 
-## 📝 Notas Importantes
+## Notas Importantes
 
 - **No inicies todos los servicios a la vez**: Espera a que cada uno esté listo
 - **Guarda el TOKEN JWT**: Lo necesitarás para los curl requests
