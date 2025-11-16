@@ -1,11 +1,11 @@
-FROM maven:3.8-eclipse-temurin-11 AS builder
+FROM maven:3.8-eclipse-temurin-8 AS builder
 
 WORKDIR /app
 COPY . .
 
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:11-jre-alpine
+FROM eclipse-temurin:8-jre-alpine
 
 WORKDIR /app
 
