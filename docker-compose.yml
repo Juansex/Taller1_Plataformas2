@@ -66,6 +66,9 @@ services:
     environment:
       - JWT_SECRET=PRFT
       - SERVER_PORT=8083
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=RedisSecure2025!
     networks:
       - microservices
     healthcheck:

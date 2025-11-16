@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require("body-parser")
 const jwt = require('express-jwt')
 
-const ZIPKIN_URL = process.env.ZIPKIN_URL || 'http://127.0.0.1:9411/api/v2/spans';
+const ZIPKIN_URL = process.env.ZIPKIN_URL || 'http://zipkin:9411/api/v2/spans';
 const {Tracer, 
   BatchRecorder,
   jsonEncoder: {JSON_V2}} = require('zipkin');
@@ -13,8 +13,9 @@ const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddle
 
 const logChannel = process.env.REDIS_CHANNEL || 'log_channel';
 const redisClient = require("redis").createClient({
-  host: process.env.REDIS_HOST || 'localhost',
+  host: process.env.REDIS_HOST || 'redis',
   port: process.env.REDIS_PORT || 6379,
+  password: process.env.REDIS_PASSWORD,
   retry_strategy: function (options) {
       if (options.error && options.error.code === 'ECONNREFUSED') {
           return new Error('The server refused the connection');
