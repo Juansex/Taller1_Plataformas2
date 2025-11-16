@@ -16,6 +16,20 @@ services:
     networks:
       - microservices
 
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis-exporter
+    command:
+      - '--redis.addr=redis:6379'
+      - '--redis.password=RedisSecure2025!'
+    ports:
+      - "9121:9121"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - microservices
+
   auth-api:
     build:
       context: ./auth-api
