@@ -2,14 +2,14 @@ services:
   redis:
     image: redis:7.0-alpine
     container_name: redis
-    command: redis-server --requirepass RedisSecure2025! --bind 0.0.0.0
+    command: redis-server --requirepass ${REDIS_PASSWORD} --bind 0.0.0.0
     # NO expongas Redis públicamente - solo para desarrollo local
     # ports:
     #   - "6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "RedisSecure2025!", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 5s
       timeout: 3s
       retries: 5
@@ -24,7 +24,7 @@ services:
       - "9121:9121"
     environment:
       - REDIS_ADDR=redis:6379
-      - REDIS_PASSWORD=RedisSecure2025!
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     depends_on:
       redis:
         condition: service_healthy
@@ -37,13 +37,13 @@ services:
       dockerfile: Dockerfile
     container_name: auth-api
     ports:
-      - "8000:8000"
+      - "${AUTH_API_PORT}:${AUTH_API_PORT}"
     depends_on:
       redis:
         condition: service_healthy
     environment:
-      - JWT_SECRET=PRFT
-      - AUTH_API_PORT=8000
+      - JWT_SECRET=${JWT_SECRET}
+      - AUTH_API_PORT=${AUTH_API_PORT}
       - USERS_API_ADDRESS=http://users-api:8083
     networks:
       - microservices
@@ -59,16 +59,16 @@ services:
       dockerfile: Dockerfile
     container_name: users-api
     ports:
-      - "8083:8083"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     depends_on:
       redis:
         condition: service_healthy
     environment:
-      - JWT_SECRET=PRFT
-      - SERVER_PORT=8083
+      - JWT_SECRET=${JWT_SECRET}
+      - SERVER_PORT=${SERVER_PORT}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=RedisSecure2025!
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     networks:
       - microservices
     healthcheck:
@@ -83,17 +83,17 @@ services:
       dockerfile: Dockerfile
     container_name: todos-api
     ports:
-      - "8082:8082"
+      - "${TODO_API_PORT}:${TODO_API_PORT}"
     depends_on:
       redis:
         condition: service_healthy
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=RedisSecure2025!
-      - REDIS_CHANNEL=log_channel
-      - JWT_SECRET=PRFT
-      - TODO_API_PORT=8082
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CHANNEL=${REDIS_CHANNEL}
+      - JWT_SECRET=${JWT_SECRET}
+      - TODO_API_PORT=${TODO_API_PORT}
     networks:
       - microservices
     healthcheck:
@@ -113,8 +113,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=RedisSecure2025!
-      - REDIS_CHANNEL=log_channel
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CHANNEL=${REDIS_CHANNEL}
     networks:
       - microservices
 

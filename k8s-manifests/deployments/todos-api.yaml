@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todos-api
+  namespace: default
+  labels:
+    app: todos-api
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todos-api
+  template:
+    metadata:
+      labels:
+        app: todos-api
+        version: v1
+    spec:
+      containers:
+      - name: todos-api
+        image: todos-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8082
+          name: http
+        env:
+        - name: TODO_API_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: todo-api-port
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: redis-host
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: redis-password
+        - name: REDIS_CHANNEL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: redis-channel
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          tcpSocket:
+            port: 8082
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 8082
+          initialDelaySeconds: 5
+          periodSeconds: 5

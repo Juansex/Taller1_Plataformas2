@@ -310,10 +310,47 @@ lsof -i :8080  # Cambiar por el puerto que necesites
 kill -9 PID
 ```
 
+## Deployment en Kubernetes con HPA
+
+Este proyecto incluye manifiestos Kubernetes completos con Horizontal Pod Autoscaler implementado:
+
+### Características de Kubernetes
+- **5 Deployments**: Cada microservicio con 2-10 replicas automáticas
+- **HPA Automático**: Escalado basado en CPU (70%) y Memory (80%)
+- **ConfigMaps y Secrets**: Gestión segura de variables
+- **Services**: Exposición interna y externa de servicios
+- **Health Checks**: Liveness y readiness probes en todos los pods
+
+### Instrucciones Rápidas
+```bash
+# 1. Tener Minikube o Kubernetes activo
+minikube start
+
+# 2. Construir imágenes
+docker build -t auth-api:latest ./auth-api
+docker build -t users-api:latest ./users-api
+docker build -t todos-api:latest ./todos-api
+docker build -t log-processor:latest ./log-message-processor
+docker build -t frontend:latest ./frontend
+
+# 3. Desplegar en Kubernetes
+cd k8s-manifests
+./deploy.sh
+
+# 4. Monitorear HPAs
+kubectl get hpa -w
+```
+
+### Documentación Completa
+- **[GUIA_KUBERNETES.md](GUIA_KUBERNETES.md)** - Guía detallada de HPA y Kubernetes
+- Manifiestos en carpeta `k8s-manifests/`
+
 ## Documentación Adicional
 
 - **[Guion para Video Explicativo](GUION_VIDEO.md)** - Script completo paso a paso para grabar presentación
-- [Documentación detallada de pruebas](VERIFICATION_RESULTS.md)
+- **[Guía Kubernetes](GUIA_KUBERNETES.md)** - Implementación completa de HPA
+- **[Evaluación de Criterios](EVALUACION_CRITERIOS.md)** - Mapeo detallado de 8 criterios
+- **[Para el Profesor](PARA_EL_PROFESOR.md)** - Guía de evaluación
 - [Auth API README](auth-api/README.md)
 - [Users API README](users-api/README.md)
 - [TODOs API README](todos-api/README.md)

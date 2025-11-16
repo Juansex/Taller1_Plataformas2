@@ -1,6 +1,35 @@
 # Índice del Proyecto
 
-## Documentación Principal
+# Índice de Documentación
+
+## 📋 Documentos Prioritarios
+
+### 🎓 **SI ERES EL PROFESOR**
+→ **[PARA_EL_PROFESOR.md](PARA_EL_PROFESOR.md)** ⭐⭐⭐
+   - Resumen de criterios cumplidos (todos 8)
+   - Cómo ejecutar y evaluar
+   - Verificación rápida (15 minutos)
+   - Score final del proyecto
+
+### 👨‍💻 **SI QUIERES EJECUTAR EL PROYECTO**
+→ **[PRIMEROS_PASOS.md](PRIMEROS_PASOS.md)** ⭐⭐
+   - Setup inicial (configurar .env)
+   - Cómo levantar servicios (2 minutos)
+   - URLs de acceso
+   - Troubleshooting
+
+### 📚 **REFERENCIAS TÉCNICAS**
+1. **[EVALUACION_CRITERIOS.md](EVALUACION_CRITERIOS.md)** 📊
+   - Mapeo detallado de criterios profesor
+   - Ejemplos de código para cada criterio
+   - Explicación técnica completa
+
+2. **[REFERENCIA_RAPIDA.md](REFERENCIA_RAPIDA.md)**
+   - Comandos Docker más usados
+   - URLs de servicios
+   - Casos de uso comunes
+
+## 📚 Guías Técnicas
 
 | Documento | Propósito | Contenido |
 |-----------|-----------|-----------|

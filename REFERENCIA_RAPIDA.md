@@ -1,14 +1,34 @@
 # Referencia Rápida - Comandos Esenciales
 
+## ⚙️ Configuración Inicial (Primera vez)
+
+```bash
+# 1. Copiar template de variables de entorno
+cp .env.example .env
+
+# 2. Revisar y ajustar valores en .env si es necesario
+cat .env
+
+# 3. Asegurar que .env NO está en git (por seguridad)
+grep "\.env" .gitignore  # Debe estar en .gitignore
+```
+
+> **Nota:** `.env.example` es committed (documentación), `.env` es local (secrets).
+
+---
+
 ## Iniciar TODO (La forma más rápida)
 
 ```bash
 # Opción 1: Automática (Recomendada)
 ./demo.sh
 
-# Opción 2: Manual
+# Opción 2: Manual (con variables de entorno)
 docker-compose build
-docker-compose up
+docker-compose up -d
+
+# Ver estado de servicios
+docker-compose ps
 ```
 
 ---
@@ -21,18 +41,20 @@ docker-compose up
 | Prometheus | http://localhost:9090 | - | - |
 | Grafana | http://localhost:3000 | admin | admin |
 
+> **Variables de entorno:** Todas las URLs y credenciales se cargan desde `.env` automáticamente.
+
 ---
 
 ##  APIs Internas
 
 ```bash
-# Auth API
+# Auth API (puerto desde .env: AUTH_API_PORT)
 curl http://localhost:8000/health
 
-# Users API
+# Users API (puerto desde .env: SERVER_PORT)
 curl http://localhost:8083/users
 
-# TODOs API (requiere auth)
+# TODOs API (puerto desde .env: TODO_API_PORT - requiere auth)
 TOKEN=$(curl -s -X POST http://localhost:8000/auth \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin"}' | jq -r '.token')
@@ -48,7 +70,7 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8082/todos
 # Todos los servicios
 docker-compose logs -f
 
-# Log Processor (operaciones en tiempo real)
+# Log Processor (operaciones en tiempo real con Redis)
 docker-compose logs -f log-processor
 
 # APIs específicos
@@ -56,6 +78,9 @@ docker-compose logs -f auth-api users-api todos-api
 
 # Frontend
 docker-compose logs -f frontend
+
+# Redis y exporters
+docker-compose logs -f redis redis-exporter
 ```
 
 ---
@@ -68,6 +93,10 @@ docker-compose stop
 
 # Detener y eliminar contenedores
 docker-compose down
+
+# Limpiar completamente (volúmenes incluidos)
+docker-compose down -v
+```
 
 # Limpiar todo incluyendo volúmenes
 docker-compose down -v

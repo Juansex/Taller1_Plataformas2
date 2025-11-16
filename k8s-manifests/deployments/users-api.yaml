@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-api
+  namespace: default
+  labels:
+    app: users-api
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: users-api
+  template:
+    metadata:
+      labels:
+        app: users-api
+        version: v1
+    spec:
+      containers:
+      - name: users-api
+        image: users-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8083
+          name: http
+        env:
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: jwt-secret
+        - name: SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: server-port
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: redis-host
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: redis-password
+        - name: SPRING_ZIPKIN_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: zipkin-url
+        resources:
+          requests:
+            cpu: 150m
+            memory: 512Mi
+          limits:
+            cpu: 800m
+            memory: 1024Mi
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8083
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8083
+          initialDelaySeconds: 10
+          periodSeconds: 5
