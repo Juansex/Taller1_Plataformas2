@@ -2,14 +2,14 @@ services:
   redis:
     image: redis:7.0-alpine
     container_name: redis
-    command: redis-server --requirepass RedisSecure2025! --bind 0.0.0.0
+    command: redis-server --requirepass password
     # NO expongas Redis públicamente - solo para desarrollo local
     # ports:
     #   - "6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "RedisSecure2025!", "ping"]
+      test: ["CMD", "redis-cli", "-a", "password", "ping"]
       interval: 5s
       timeout: 3s
       retries: 5
@@ -72,7 +72,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=RedisSecure2025!
+      - REDIS_PASSWORD=password
       - REDIS_CHANNEL=log_channel
       - JWT_SECRET=PRFT
       - TODO_API_PORT=8082
@@ -95,8 +95,20 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=RedisSecure2025!
+      - REDIS_PASSWORD=password
       - REDIS_CHANNEL=log_channel
+    networks:
+      - microservices
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis-exporter
+    environment:
+      - REDIS_ADDR=redis:6379
+      - REDIS_PASSWORD=password
+    depends_on:
+      redis:
+        condition: service_healthy
     networks:
       - microservices
 

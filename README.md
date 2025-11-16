@@ -82,6 +82,8 @@ cd Taller1_Plataformas2
 ### Paso 2: Iniciar Redis
 Redis es necesario para **todos-api** y **log-message-processor**.
 
+> **⚠️ Nota de Seguridad**: El archivo `docker-compose.yml` utiliza la contraseña de ejemplo 'password' para Redis en el entorno de desarrollo local. **CAMBIAR ESTA CONTRASEÑA** antes de desplegar en cualquier entorno de producción o red accesible públicamente.
+
 ```bash
 # Usando Docker (recomendado)
 docker run -d -p 6379:6379 --name redis redis:7.0
