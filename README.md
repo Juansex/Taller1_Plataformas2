@@ -1,366 +1,158 @@
 # Microservice App - Taller 1 Plataformas 2
 
-Aplicación de ejemplo basada en arquitectura de microservicios para el curso de Plataformas 2. Este proyecto implementa una aplicación TODO utilizando 5 microservicios diferentes, cada uno construido con tecnologías distintas (Go, Java, Node.js, Python, Vue.js).
+Aplicación de microservicios con 9 servicios containerizados, escalado automático con Kubernetes HPA, CI/CD automático y monitoreo en tiempo real.
 
-> **Para demostración en video**: Consulta el archivo **[GUION_VIDEO.md](GUION_VIDEO.md)** que contiene un guion completo paso a paso para la presentación.
+## Quick Start
 
-## Tabla de Contenidos
-- [Componentes](#componentes)
-- [Arquitectura](#arquitectura)
-- [Requisitos](#requisitos)
-- [Instalación y Configuración](#instalación-y-configuración)
-- [Ejecución de los Servicios](#ejecución-de-los-servicios)
-- [Pruebas](#pruebas)
-- [Demostración Completa](#demostración-completa)
-- [Solución de Problemas](#solución-de-problemas)
+### Docker Compose (Desarrollo)
+```bash
+cp .env.example .env
+docker-compose up -d
+docker-compose ps  # Verificar 9 servicios UP
+```
 
-## Componentes
+URLs: Frontend (8080), Prometheus (9090), Grafana (3000)
 
-### 1. [Auth API](/auth-api) (Go)
-Servicio de autenticación que genera tokens JWT.
-- **Puerto**: 8000
-- **Tecnología**: Go
-- **Función**: Autenticación de usuarios y generación de tokens JWT
-
-### 2. [Users API](/users-api) (Java/Spring Boot)
-API de perfiles de usuario.
-- **Puerto**: 8083
-- **Tecnología**: Java con Spring Boot
-- **Función**: Gestión de información de usuarios
-
-### 3. [TODOs API](/todos-api) (Node.js)
-API para operaciones CRUD sobre tareas TODO.
-- **Puerto**: 8082
-- **Tecnología**: Node.js con Express
-- **Función**: Crear, leer, actualizar y eliminar tareas
-
-### 4. [Log Message Processor](/log-message-processor) (Python)
-Procesador de mensajes de cola Redis.
-- **Tecnología**: Python
-- **Función**: Procesar y mostrar logs de operaciones
-
-### 5. [Frontend](/frontend) (Vue.js)
-Interfaz de usuario web.
-- **Puerto**: 8080
-- **Tecnología**: Vue.js
-- **Función**: Interfaz gráfica para la aplicación
+### Kubernetes con HPA (Producción)
+```bash
+cd k8s-manifests
+./deploy.sh
+kubectl get hpa -w  # Monitorear escalado automático
+```
 
 ## Arquitectura
 
-La aplicación sigue una arquitectura de microservicios donde cada componente es independiente y se comunica mediante APIs REST y colas de mensajes.
+**9 Servicios:**
+- Frontend (Vue.js, 8080) - Interfaz web
+- Auth API (Go, 8000) - Autenticación JWT
+- Users API (Java/Spring Boot, 8083) - Gestión de usuarios
+- Todos API (Node.js, 8082) - CRUD de tareas
+- Log Processor (Python) - Procesamiento de logs desde Redis
+- Redis (6379) - Broker de mensajes
+- Redis Exporter (9121) - Métricas de Redis
+- Prometheus (9090) - Recolección de métricas
+- Grafana (3000) - Visualización de dashboards
 
-![microservice-app-example](/arch-img/Microservices.png)
+**Networking:** Todos los servicios se comunican por service names en red interna.
 
-**Flujo de datos:**
-1. Usuario se autentica en **Auth API**
-2. Obtiene token JWT para acceder a otros servicios
-3. **Frontend** consume **TODOs API** y **Users API**
-4. Las operaciones se registran en Redis
-5. **Log Message Processor** procesa los mensajes de Redis
+## 8 Criterios de Evaluación
 
-## Requisitos
+| Criterio | Implementación |
+|----------|---|
+| **Docker** | 9 servicios containerizados con docker-compose.yml |
+| **Networking** | Comunicación por service names |
+| **HPA** | 5 Horizontal Pod Autoscalers (CPU 70%, Memory 80%, 2-10 replicas) |
+| **Secrets** | Variables externalizadas en .env, protegidas en .gitignore |
+| **CI/CD** | GitHub Actions: Build, Lint, Test, Summary en cada push |
+| **Monitoring** | Prometheus + Grafana + Redis Exporter + Spring Boot Actuator + Zipkin |
+| **Documentación** | README completo con instrucciones |
+| **Demostración** | Sistema completamente funcional y testeable |
 
-### Herramientas Necesarias
-- **Go** >= 1.18.2
-- **Java** (OpenJDK 8 o superior)
-- **Maven** (incluido en mvnw)
-- **Node.js** >= 8.17.0
-- **NPM** >= 6.13.4
-- **Python** >= 3.6
-- **pip3**
-- **Redis** >= 7.0
-- **Docker** (opcional, para ejecutar Redis)
+## Deployment
 
-## Instalación y Configuración
-
-### Paso 1: Clonar el Repositorio
-```bash
-git clone https://github.com/Juansex/Taller1_Plataformas2.git
-cd Taller1_Plataformas2
+### Estructura Kubernetes
+```
+k8s-manifests/
+├── deployments/     (5 servicios)
+├── services/        (ClusterIP + NodePort)
+├── hpa/             (5 HPAs configurados)
+├── configmaps/      (variables públicas)
+├── secrets/         (datos sensibles)
+└── deploy.sh        (script automático)
 ```
 
-### Paso 2: Iniciar Redis
-Redis es necesario para **todos-api** y **log-message-processor**.
+### Configuración HPA
+- Min Replicas: 2 | Max Replicas: 10
+- CPU Threshold: 70% | Memory Threshold: 80%
+- Scale Up: Duplica cada 30 segundos
+- Scale Down: Reduce 50% después de 5 minutos
 
+## Requisitos Previos
+
+**Docker Compose:**
+- Docker >= 20.10
+- Docker Compose >= 1.29
+
+**Kubernetes:**
+- kubectl configurado
+- Kubernetes cluster (Minikube, Docker Desktop, etc.)
+- Metrics Server instalado
+
+## Variables de Entorno
+
+Copiar `.env.example` a `.env`:
 ```bash
-# Usando Docker (recomendado)
-docker run -d -p 6379:6379 --name redis redis:7.0
-
-# O instalar Redis localmente según tu sistema operativo
+REDIS_PASSWORD=RedisSecure2025!
+JWT_SECRET=PRFT
+AUTH_API_PORT=8000
+SERVER_PORT=8083
+TODO_API_PORT=8082
+REDIS_CHANNEL=log_channel
+GRAFANA_ADMIN_USER=admin
+GRAFANA_ADMIN_PASSWORD=admin
 ```
 
-### Paso 3: Construir cada Microservicio
+## Comandos Útiles
 
-#### Auth API (Go)
+**Docker Compose:**
 ```bash
-cd auth-api
-export GO111MODULE=on
-go mod init github.com/bortizf/microservice-app-example/tree/master/auth-api
-go mod tidy
-go build
-cd ..
+docker-compose up -d              # Levantar
+docker-compose ps                 # Ver estado
+docker-compose logs -f            # Ver logs
+docker-compose down -v            # Detener y limpiar
+docker-compose up -d --scale users-api=5  # Escalar manual
 ```
 
-#### Users API (Java)
+**Kubernetes:**
 ```bash
-cd users-api
-./mvnw clean package -DskipTests
-cd ..
+kubectl apply -f k8s-manifests/   # Aplicar manifiestos
+kubectl get pods                  # Listar pods
+kubectl get hpa                   # Ver HPAs
+kubectl logs <pod>                # Ver logs
+kubectl describe hpa <nombre>     # Detalles HPA
+kubectl top pods                  # Uso de recursos
 ```
 
-#### TODOs API (Node.js)
-```bash
-cd todos-api
-npm install
-cd ..
+**Prometheus Queries:**
+```
+rate(http_requests_total[5m])     # Requests por segundo
+process_cpu_seconds_total         # CPU usage
+jvm_memory_usage_bytes            # Memoria JVM
+redis_connected_clients           # Clientes Redis
 ```
 
-#### Log Message Processor (Python)
+## Verificación de Funcionamiento
+
+1. Frontend accesible: `http://localhost:8080`
+2. Login: `admin / admin`
+3. Prometheus: `http://localhost:9090`
+4. Grafana: `http://localhost:3000` (admin/admin)
+5. Todos los 9 servicios en estado UP
+
+## Troubleshooting
+
+**Docker: Puerto ya en uso**
 ```bash
-cd log-message-processor
-pip3 install -r requirements.txt
-cd ..
+lsof -i :8080
+kill -9 <PID>
 ```
 
-#### Frontend (Vue.js)
+**Redis: Connection refused**
 ```bash
-cd frontend
-npm install --legacy-peer-deps
-cd ..
-```
-
-## Ejecución de los Servicios
-
-### Orden de Inicio Recomendado
-
-#### 1. Users API (Puerto 8083)
-```bash
-cd users-api
-JWT_SECRET=PRFT SERVER_PORT=8083 java -jar target/users-api-0.0.1-SNAPSHOT.jar
-```
-
-#### 2. Auth API (Puerto 8000)
-```bash
-cd auth-api
-JWT_SECRET=PRFT AUTH_API_PORT=8000 USERS_API_ADDRESS=http://127.0.0.1:8083 ./auth-api
-```
-
-#### 3. TODOs API (Puerto 8082)
-```bash
-cd todos-api
-JWT_SECRET=PRFT TODO_API_PORT=8082 REDIS_HOST=127.0.0.1 REDIS_PORT=6379 REDIS_CHANNEL=log_channel npm start
-```
-
-#### 4. Log Message Processor
-```bash
-cd log-message-processor
-REDIS_HOST=127.0.0.1 REDIS_PORT=6379 REDIS_CHANNEL=log_channel python3 main.py
-```
-
-#### 5. Frontend (Puerto 8080)
-```bash
-cd frontend
-PORT=8080 AUTH_API_ADDRESS=http://127.0.0.1:8000 TODOS_API_ADDRESS=http://127.0.0.1:8082 npm start
-```
-
-## Pruebas
-
-### Probar Auth API
-```bash
-# Login (devuelve un token JWT)
-curl -X POST http://127.0.0.1:8000/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin"}'
-```
-
-**Usuarios disponibles:**
-- admin / admin
-- johnd / foo
-- janed / ddd
-
-### Probar Users API
-```bash
-# Listar todos los usuarios
-curl -X GET http://127.0.0.1:8083/users
-
-# Obtener usuario específico (requiere token)
-curl -X GET http://127.0.0.1:8083/users/admin \
-  -H "Authorization: Bearer TU_TOKEN_JWT_AQUI"
-```
-
-### Probar TODOs API
-```bash
-# Crear un TODO (requiere token)
-curl -X POST http://127.0.0.1:8082/todos \
-  -H "Authorization: Bearer TU_TOKEN_JWT_AQUI" \
-  -H "Content-Type: application/json" \
-  -d '{"content":"Mi primera tarea"}'
-
-# Listar TODOs (requiere token)
-curl -X GET http://127.0.0.1:8082/todos \
-  -H "Authorization: Bearer TU_TOKEN_JWT_AQUI"
-```
-
-### Probar Frontend
-Abrir en el navegador: http://127.0.0.1:8080
-
-## Demostración Completa
-
-### Flujo Completo de Trabajo
-
-Para una demostración completa del sistema funcionando:
-
-**1. Autenticarse y obtener token:**
-```bash
-TOKEN=$(curl -s -X POST http://127.0.0.1:8000/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin"}' | jq -r '.token')
-```
-
-**2. Verificar usuarios disponibles:**
-```bash
-curl -X GET http://127.0.0.1:8083/users
-```
-
-**3. Crear varias tareas:**
-```bash
-# Tarea 1
-curl -X POST http://127.0.0.1:8082/todos \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"content":"Preparar presentación del proyecto"}'
-
-# Tarea 2
-curl -X POST http://127.0.0.1:8082/todos \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"content":"Revisar documentación"}'
-
-# Tarea 3
-curl -X POST http://127.0.0.1:8082/todos \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"content":"Hacer pruebas de integración"}'
-```
-
-**4. Ver todas las tareas creadas:**
-```bash
-curl -X GET http://127.0.0.1:8082/todos \
-  -H "Authorization: Bearer $TOKEN"
-```
-
-**5. Observar los logs:**
-- En la terminal del **Log Message Processor** verás cada operación CREATE que realizaste
-- Cada mensaje incluye el tipo de operación, usuario y ID de la tarea
-
-**6. Probar la interfaz web:**
-- Abre http://127.0.0.1:8080 en tu navegador
-- Inicia sesión con: **admin** / **admin**
-- Verás las 3 tareas que creaste con curl
-- Crea una nueva tarea desde la interfaz
-- Marca una tarea como completada
-- Elimina una tarea
-- Observa cómo el Log Processor muestra cada operación en tiempo real
-
-### Verificar que Todo Funciona
-
-**Checklist de verificación:**
-- [ ] Redis está corriendo (`docker ps`)
-- [ ] Users API responde en puerto 8083
-- [ ] Auth API responde en puerto 8000 y genera tokens
-- [ ] TODOs API responde en puerto 8082 con operaciones CRUD
-- [ ] Log Processor muestra logs de operaciones en consola
-- [ ] Frontend carga en puerto 8080 y permite login
-- [ ] Las operaciones desde el navegador aparecen en los logs
-
-## Solución de Problemas
-
-### Frontend no compila (node-sass error)
-**Problema**: Error de Python con node-sass
-**Solución**: Usar el flag `--legacy-peer-deps`
-```bash
-cd frontend
-npm install --legacy-peer-deps
-```
-
-### Error de conexión entre servicios
-**Verificar**:
-1. Todos los servicios están ejecutándose
-2. Los puertos no están ocupados por otras aplicaciones
-3. Las variables de entorno están correctamente configuradas
-4. El JWT_SECRET es el mismo en todos los servicios (PRFT)
-
-### Redis connection refused
-**Verificar**:
-```bash
-# Verificar que Redis está corriendo
 docker ps | grep redis
-
-# O si está instalado localmente
-redis-cli ping
-# Debe responder: PONG
+docker logs <container-id>
 ```
 
-### Puerto ya en uso
+**Kubernetes: Pods no inician**
 ```bash
-# Ver qué proceso está usando el puerto
-lsof -i :8080  # Cambiar por el puerto que necesites
-
-# Detener el proceso
-kill -9 PID
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
 ```
 
-## Deployment en Kubernetes con HPA
-
-Este proyecto incluye manifiestos Kubernetes completos con Horizontal Pod Autoscaler implementado:
-
-### Características de Kubernetes
-- **5 Deployments**: Cada microservicio con 2-10 replicas automáticas
-- **HPA Automático**: Escalado basado en CPU (70%) y Memory (80%)
-- **ConfigMaps y Secrets**: Gestión segura de variables
-- **Services**: Exposición interna y externa de servicios
-- **Health Checks**: Liveness y readiness probes en todos los pods
-
-### Instrucciones Rápidas
+**Metrics Server no disponible**
 ```bash
-# 1. Tener Minikube o Kubernetes activo
-minikube start
-
-# 2. Construir imágenes
-docker build -t auth-api:latest ./auth-api
-docker build -t users-api:latest ./users-api
-docker build -t todos-api:latest ./todos-api
-docker build -t log-processor:latest ./log-message-processor
-docker build -t frontend:latest ./frontend
-
-# 3. Desplegar en Kubernetes
-cd k8s-manifests
-./deploy.sh
-
-# 4. Monitorear HPAs
-kubectl get hpa -w
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
-
-### Documentación Completa
-- **[GUIA_KUBERNETES.md](GUIA_KUBERNETES.md)** - Guía detallada de HPA y Kubernetes
-- Manifiestos en carpeta `k8s-manifests/`
-
-## Documentación Adicional
-
-- **[Guion para Video Explicativo](GUION_VIDEO.md)** - Script completo paso a paso para grabar presentación
-- **[Guía Kubernetes](GUIA_KUBERNETES.md)** - Implementación completa de HPA
-- **[Evaluación de Criterios](EVALUACION_CRITERIOS.md)** - Mapeo detallado de 8 criterios
-- **[Para el Profesor](PARA_EL_PROFESOR.md)** - Guía de evaluación
-- [Auth API README](auth-api/README.md)
-- [Users API README](users-api/README.md)
-- [TODOs API README](todos-api/README.md)
-- [Log Message Processor README](log-message-processor/README.md)
-- [Frontend README](frontend/README.md)
-
-## Créditos
-
-- Proyecto base: [bortizf/microservice-app-example](https://github.com/bortizf/microservice-app-example)
-- Referencia de implementación: [felipevelasco7/microservice-app-example](https://github.com/felipevelasco7/microservice-app-example)
 
 ## Licencia
 
