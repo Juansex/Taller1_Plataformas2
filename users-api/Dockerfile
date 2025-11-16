@@ -3,7 +3,7 @@ FROM maven:3.8-eclipse-temurin-11 AS builder
 WORKDIR /app
 COPY . .
 
-RUN ./mvnw clean package -DskipTests
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:11-jre-alpine
 
