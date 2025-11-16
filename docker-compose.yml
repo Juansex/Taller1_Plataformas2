@@ -1,21 +1,21 @@
 services:
-  # Redis - Cola de mensajes
   redis:
     image: redis:7.0-alpine
     container_name: redis
-    ports:
-      - "6379:6379"
+    command: redis-server --requirepass RedisSecure2025! --bind 0.0.0.0
+    # NO expongas Redis públicamente - solo para desarrollo local
+    # ports:
+    #   - "6379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD", "redis-cli", "-a", "RedisSecure2025!", "ping"]
       interval: 5s
       timeout: 3s
       retries: 5
     networks:
       - microservices
 
-  # Auth API (Go)
   auth-api:
     build:
       context: ./auth-api
@@ -27,17 +27,17 @@ services:
       redis:
         condition: service_healthy
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - JWT_SECRET=PRFT
+      - AUTH_API_PORT=8000
+      - USERS_API_ADDRESS=http://users-api:8083
     networks:
       - microservices
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/health"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
 
-  # Users API (Java)
   users-api:
     build:
       context: ./users-api
@@ -49,18 +49,16 @@ services:
       redis:
         condition: service_healthy
     environment:
-      - SPRING_APPLICATION_NAME=users-api
+      - JWT_SECRET=PRFT
       - SERVER_PORT=8083
-      - REDIS_HOST=redis
     networks:
       - microservices
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8083/users"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8083/users || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
 
-  # TODOs API (Node.js)
   todos-api:
     build:
       context: ./todos-api
@@ -74,17 +72,18 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - PORT=8082
-      - NODE_ENV=production
+      - REDIS_PASSWORD=RedisSecure2025!
+      - REDIS_CHANNEL=log_channel
+      - JWT_SECRET=PRFT
+      - TODO_API_PORT=8082
     networks:
       - microservices
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8082/todos"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8082/health || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
 
-  # Log Message Processor (Python)
   log-processor:
     build:
       context: ./log-message-processor
@@ -96,25 +95,11 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - REDIS_PASSWORD=RedisSecure2025!
+      - REDIS_CHANNEL=log_channel
     networks:
       - microservices
 
-  # Frontend (Vue.js)
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend
-    ports:
-      - "8080:8080"
-    depends_on:
-      - auth-api
-      - users-api
-      - todos-api
-    networks:
-      - microservices
-
-  # Prometheus - Recolector de métricas
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -134,7 +119,6 @@ services:
       - users-api
       - todos-api
 
-  # Grafana - Dashboard de monitoreo
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -143,7 +127,6 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
     volumes:
       - grafana_data:/var/lib/grafana
       - ./config/grafana:/etc/grafana/provisioning
