@@ -1,0 +1,131 @@
+═══════════════════════════════════════════════════════════════════════════
+                    INSTRUCCIONES PARA WINDOWS
+═══════════════════════════════════════════════════════════════════════════
+
+⚠️ UBICACIÓN CORRECTA:
+
+El archivo .env.example está en LA CARPETA RAÍZ del proyecto, NO en k8s-manifests
+
+❌ INCORRECTO:
+C:\Users\user\OneDrive\...\Taller1_Plataformas2\k8s-manifests>
+^ Estás aquí
+
+✅ CORRECTO:
+C:\Users\user\OneDrive\...\Taller1_Plataformas2>
+^ Debes estar aquí (una carpeta arriba)
+
+═══════════════════════════════════════════════════════════════════════════
+                          PASO A PASO
+═══════════════════════════════════════════════════════════════════════════
+
+1. SALIR DE k8s-manifests (ir a la carpeta padre)
+   ───────────────────────────────────────────────
+
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2\k8s-manifests> cd ..
+
+   Resultado:
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2>
+
+
+2. COPIAR .env.example a .env
+   ────────────────────────────
+
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2> copy .env.example .env
+
+   Resultado:
+   1 file(s) copied.
+
+
+3. LEVANTAR DOCKER COMPOSE
+   ────────────────────────
+
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2> docker-compose up -d
+
+   Resultado (después de 30-60 segundos):
+   Creating network "taller1_plataformas2_microservices" with driver "bridge"
+   Creating taller1_plataformas2_redis_1         ... done
+   Creating taller1_plataformas2_auth-api_1      ... done
+   Creating taller1_plataformas2_users-api_1     ... done
+   etc...
+
+
+4. VERIFICAR QUE LEVANTÓ CORRECTAMENTE
+   ────────────────────────────────────
+
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2> docker-compose ps
+
+   Resultado esperado (todos deben estar "Up"):
+   NAME                    STATUS              PORTS
+   auth-api                Up (healthy)        0.0.0.0:8000->8000/tcp
+   users-api               Up (healthy)        0.0.0.0:8083->8083/tcp
+   todos-api               Up (healthy)        0.0.0.0:8082->8082/tcp
+   log-processor           Up                  
+   frontend                Up                  0.0.0.0:8080->80/tcp
+   redis                   Up                  0.0.0.0:6379->6379/tcp
+   redis-exporter          Up                  0.0.0.0:9121->9121/tcp
+   prometheus              Up                  0.0.0.0:9090->9090/tcp
+   grafana                 Up                  0.0.0.0:3000->3000/tcp
+
+
+5. ACCEDER A LAS APLICACIONES
+   ────────────────────────────
+
+   Abre en tu navegador:
+
+   Frontend:    http://localhost:8080 (usuario: admin, contraseña: admin)
+   Prometheus:  http://localhost:9090
+   Grafana:     http://localhost:3000 (usuario: admin, contraseña: admin)
+   Zipkin:      http://localhost:9411
+
+
+6. VER LOGS (si algo falla)
+   ──────────────────────────
+
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2> docker-compose logs -f
+
+   O de un servicio específico:
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2> docker-compose logs -f users-api
+
+
+7. DETENER CUANDO TERMINES
+   ─────────────────────────
+
+   C:\Users\user\OneDrive\...\Taller1_Plataformas2> docker-compose down -v
+
+═══════════════════════════════════════════════════════════════════════════
+                        ESTRUCTURA DE CARPETAS
+═══════════════════════════════════════════════════════════════════════════
+
+Taller1_Plataformas2/  ← AQUÍ ESTÁS AHORA (raíz)
+├── .env.example       ← .env.example está aquí ✓
+├── .env               ← Se crea aquí después de copy
+├── docker-compose.yml ← Aquí también
+├── README.md
+├── GUIA_RAPIDA.md
+├── WINDOWS_SETUP.md
+├── WINDOWS_INSTRUCCIONES.txt ← Este archivo
+│
+├── auth-api/
+├── users-api/
+├── todos-api/
+├── log-message-processor/
+├── frontend/
+├── config/
+│
+└── k8s-manifests/     ← Aquí NO está .env.example
+    ├── deployments/
+    ├── services/
+    ├── hpa/
+    └── deploy.sh
+
+═══════════════════════════════════════════════════════════════════════════
+                         RESUMIDO EN 5 LÍNEAS
+═══════════════════════════════════════════════════════════════════════════
+
+cd ..
+copy .env.example .env
+docker-compose up -d
+docker-compose ps
+# Espera 1 minuto, luego: http://localhost:8080
+
+═══════════════════════════════════════════════════════════════════════════
