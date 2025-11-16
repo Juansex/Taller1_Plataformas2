@@ -42,7 +42,7 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8082/todos
 
 ---
 
-## 🔍 Ver Logs
+##  Ver Logs
 
 ```bash
 # Todos los servicios
