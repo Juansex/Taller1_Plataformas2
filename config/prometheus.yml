@@ -13,13 +13,11 @@ alerting:
 rule_files: []
 
 scrape_configs:
-  # Auth API (Go) - Puerto 8000
-  - job_name: 'auth-api'
+  # Prometheus mismo
+  - job_name: 'prometheus'
     static_configs:
-      - targets: ['auth-api:8000']
-    metrics_path: '/metrics'
+      - targets: ['prometheus:9090']
     scrape_interval: 10s
-    scrape_timeout: 5s
 
   # Users API (Java/Spring Boot) - Puerto 8083
   - job_name: 'users-api'
@@ -37,14 +35,9 @@ scrape_configs:
     scrape_interval: 10s
     scrape_timeout: 5s
 
-  # Prometheus mismo
-  - job_name: 'prometheus'
+  # Redis Exporter - Puerto 9121
+  - job_name: 'redis-exporter'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['redis-exporter:9121']
     scrape_interval: 10s
-
-  # Redis
-  - job_name: 'redis'
-    static_configs:
-      - targets: ['redis:6379']
-    scrape_interval: 10s
+    scrape_timeout: 5s
