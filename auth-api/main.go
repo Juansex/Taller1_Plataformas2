@@ -11,6 +11,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	gommonlog "github.com/labstack/gommon/log"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -66,6 +67,12 @@ func main() {
 	e.GET("/version", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Auth API, written in Go\n")
 	})
+
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{"status": "healthy"})
+	})
+
+	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 
 	e.POST("/login", getLoginHandler(userService))
 

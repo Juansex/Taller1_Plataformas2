@@ -2,6 +2,11 @@
 const express = require('express')
 const bodyParser = require("body-parser")
 const jwt = require('express-jwt')
+const promClient = require('prom-client')
+
+// Setup Prometheus metrics
+const register = new promClient.Registry()
+promClient.collectDefaultMetrics({ register })
 
 const ZIPKIN_URL = process.env.ZIPKIN_URL || 'http://127.0.0.1:9411/api/v2/spans';
 const {Tracer, 
@@ -15,6 +20,7 @@ const logChannel = process.env.REDIS_CHANNEL || 'log_channel';
 const redisClient = require("redis").createClient({
   host: process.env.REDIS_HOST || 'localhost',
   port: process.env.REDIS_PORT || 6379,
+  password: process.env.REDIS_PASSWORD || undefined,
   retry_strategy: function (options) {
       if (options.error && options.error.code === 'ECONNREFUSED') {
           return new Error('The server refused the connection');
@@ -58,6 +64,12 @@ app.use(bodyParser.json())
 
 const routes = require('./routes')
 routes(app, {tracer, redisClient, logChannel})
+
+// Metrics endpoint for Prometheus
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType)
+  res.end(await register.metrics())
+})
 
 app.listen(port, function () {
   console.log('todo list RESTful API server started on: ' + port)
