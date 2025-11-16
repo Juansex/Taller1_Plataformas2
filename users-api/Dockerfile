@@ -1,11 +1,11 @@
-FROM maven:3.8-openjdk-11-slim AS builder
+FROM maven:3.8-eclipse-temurin-11 AS builder
 
 WORKDIR /app
 COPY . .
 
 RUN ./mvnw clean package -DskipTests
 
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-alpine
 
 WORKDIR /app
 
