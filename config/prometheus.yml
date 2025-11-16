@@ -14,12 +14,13 @@ rule_files: []
 
 scrape_configs:
   # Auth API (Go) - Puerto 8000
-  - job_name: 'auth-api'
-    static_configs:
-      - targets: ['auth-api:8000']
-    metrics_path: '/metrics'
-    scrape_interval: 10s
-    scrape_timeout: 5s
+  # NOTA: Para activar, necesita implementar /metrics en Go
+  # - job_name: 'auth-api'
+  #   static_configs:
+  #     - targets: ['auth-api:8000']
+  #   metrics_path: '/metrics'
+  #   scrape_interval: 10s
+  #   scrape_timeout: 5s
 
   # Users API (Java/Spring Boot) - Puerto 8083
   - job_name: 'users-api'
@@ -30,21 +31,22 @@ scrape_configs:
     scrape_timeout: 5s
 
   # TODOs API (Node.js) - Puerto 8082
-  - job_name: 'todos-api'
-    static_configs:
-      - targets: ['todos-api:8082']
-    metrics_path: '/metrics'
-    scrape_interval: 10s
-    scrape_timeout: 5s
+  # NOTA: Para activar, necesita instalar prom-client e implementar /metrics
+  # - job_name: 'todos-api'
+  #   static_configs:
+  #     - targets: ['todos-api:8082']
+  #   metrics_path: '/metrics'
+  #   scrape_interval: 10s
+  #   scrape_timeout: 5s
 
   # Prometheus mismo
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9090']
     scrape_interval: 10s
 
-  # Redis
+  # Redis Exporter - Expone métricas de Redis
   - job_name: 'redis'
     static_configs:
-      - targets: ['redis:6379']
+      - targets: ['redis-exporter:9121']
     scrape_interval: 10s
