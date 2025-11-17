@@ -153,6 +153,36 @@ services:
     networks:
       - microservices
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      auth-api:
+        condition: service_started
+      users-api:
+        condition: service_started
+      todos-api:
+        condition: service_started
+    environment:
+      - VUE_APP_AUTH_API=http://auth-api:${AUTH_API_PORT}
+      - VUE_APP_USERS_API=http://users-api:${SERVER_PORT}
+      - VUE_APP_TODOS_API=http://todos-api:${TODO_API_PORT}
+      - VUE_APP_ZIPKIN_URL=http://zipkin:9411
+    networks:
+      - microservices
+
 volumes:
   redis_data:
     driver: local

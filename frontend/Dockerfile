@@ -1,21 +1,13 @@
-FROM node:14-alpine AS builder
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install --legacy-peer-deps
-
-COPY . .
-
-RUN npm run build
-
 FROM nginx:alpine
 
+# Copiar configuración de Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copiar index.html y archivos estáticos
+COPY index.html /usr/share/nginx/html/index.html
 
-EXPOSE 8080
+COPY static /usr/share/nginx/html/static
+
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
