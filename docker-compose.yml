@@ -167,7 +167,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-      - "8080:80"
+      - "8090:80"
     depends_on:
       auth-api:
         condition: service_started
